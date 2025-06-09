@@ -1,0 +1,39 @@
+mat-icon {
+    color: #7c7d80;
+    font-size: large;
+}
+
+input::placeholder {
+    color: #9b9ca1;
+}
+
+.login {
+    border: .5px solid rgb(173, 173, 173);
+}
+
+.login>button:hover {
+    cursor: pointer;
+}
+
+li div>button::after {
+    content: "";
+    width: 0px;
+    height: 3px;
+    background-color: red;
+    position: absolute;
+    bottom: -5px;
+    right: 0px;
+    transition: all .3s ease-in-out 0ms;
+}
+
+li:hover div>button::after {
+    width: 100%;
+}
+
+div>img {
+    border: 1px solid gray;
+}
+
+div>input:focus {
+    border: 2px solid #007BFF;
+}

@@ -1,0 +1,50 @@
+<div class="flex items-center justify-between">
+    <div class="relative left-3 p-2 ">
+        <img src="ecrud.png" alt="" width="40px" height="40px" class="rounded-2xl">
+    </div>
+    <nav>
+        <ul class="flex gap-4 p-5">
+            <li>
+                <div class="flex items-start">
+                    <button class="relative flex items-center"> <mat-icon><span class="material-symbols-outlined">
+                                smartphone
+                            </span></mat-icon>Mobiles</button>
+                </div>
+            </li>
+            <li>
+                <div class="flex items-start">
+                    <button class="relative flex items-center"> <mat-icon><span class="material-symbols-outlined ">
+                                computer
+                            </span></mat-icon>Laptops</button>
+                </div>
+            </li>
+            <li>
+                <div class="flex items-start">
+
+                    <button class="relative flex items-center"> <mat-icon><span class="material-symbols-outlined ">
+                                headphones
+                            </span></mat-icon>Headsets</button>
+                </div>
+            </li>
+            <li>
+                <div class="flex  items-start">
+
+                    <button class="relative flex items-center"> <mat-icon><span class="material-symbols-outlined">
+                                keyboard_alt
+                            </span></mat-icon>Keyboards</button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div class="flex gap-5 justify-between min-w-1/4 bg-gray-100 rounded-xl relative">
+        <input type="text" placeholder="search" class="outline-none p-2 w-full rounded-xl focus:border">
+        <mat-icon class="top-3 right-0 absolute"><span class="material-symbols-outlined">
+                search
+            </span></mat-icon>
+    </div>
+    <div>
+        <div class="flex gap-1 login rounded-2xl relative mr-4">
+            <button class="rounded-lg p-2" [routerLink]="['/auth']">Sign in/up</button>
+        </div>
+    </div>
+</div>

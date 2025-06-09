@@ -1,0 +1,8 @@
+.footer {
+    background-image: linear-gradient(90deg, #0079b1, #1b3570)
+}
+
+.scroll {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+}
