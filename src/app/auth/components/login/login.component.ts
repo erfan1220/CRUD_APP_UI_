@@ -1,4 +1,6 @@
-import { Component, ElementRef, inject, viewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
   FormBuilder,
   FormGroup,
@@ -6,36 +8,63 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, HttpClientModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  // isActive = false;
+  isEmpty = false;
+  isInValid = false;
+  isFocused = false;
+  value = '';
 
   private formBuilder: FormBuilder = inject(FormBuilder);
+  private http: HttpClient = inject(HttpClient);
+  private router: Router = inject(Router);
 
   loginForm: FormGroup = new FormGroup({});
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      EmailInput: [
-        '',
-        [
-          Validators.required,
-          Validators.email,
-        ],
-      ],
+      EmailInput: ['', [Validators.required, Validators.email]],
     });
-    // if (this.loginForm.valid) {
-    //   this.isActive = true
-    // } else {
-    //   this.isActive = false
-    // }
   }
 
   onSubmit() {
+    if (this.loginForm.invalid) {
+      this.isInValid = true;
+    } else {
+      this.isInValid = false;
+      const requestBody = {
+        user_email: this.value,
+      };
+      this.http
+        .post<any>('http://localhost:5000/user/login', requestBody)
+        .subscribe({
+          next: (res) => {
+            const { data, message } = res;
+            console.log(res);
+            localStorage.setItem('email', this.value);
+            localStorage.setItem('token', data);
+            localStorage.setItem('state', message);
+            this.router.navigate(['/verify'])
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+      this.router.navigate(['../auth/verify'])
+    }
+  }
+
+  onchange(event: any) {
+    this.value = event.target.value;
+    if (this.value.trim() == '') this.isEmpty = true;
+    else {
+      this.isEmpty = false;
+    }
   }
 }

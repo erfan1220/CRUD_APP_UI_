@@ -1,11 +1,70 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-verify',
-  imports: [],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, HttpClientModule],
   templateUrl: './verify.component.html',
-  styleUrl: './verify.component.css'
+  styleUrl: './verify.component.css',
 })
 export class VerifyComponent {
+  isEmpty = false;
+  isInValid = false;
+  isFocused = false;
+  value = '';
 
+  private formBuilder: FormBuilder = inject(FormBuilder);
+  private http: HttpClient = inject(HttpClient);
+  private router: Router = inject(Router);
+
+  loginForm: FormGroup = new FormGroup({});
+  ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      EmailInput: ['', [Validators.required, Validators.email]],
+    });
+  }
+
+  onSubmit() {
+    if (this.loginForm.invalid) {
+      this.isInValid = true;
+    } else {
+      this.isInValid = false;
+      const requestBody = {
+        user_email: this.value,
+      };
+      this.http
+        .post<any>('http://localhost:5000/user/login', requestBody)
+        .subscribe({
+          next: (res) => {
+            const { data, message } = res;
+            console.log(res);
+            localStorage.setItem('email', this.value);
+            localStorage.setItem('token', data);
+            localStorage.setItem('state', message);
+            this.router.navigate(['/verify']);
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+      this.router.navigate(['../auth/verify']);
+    }
+  }
+
+  onchange(event: any) {
+    this.value = event.target.value;
+    if (this.value.trim() == '') this.isEmpty = true;
+    else {
+      this.isEmpty = false;
+    }
+  }
 }
