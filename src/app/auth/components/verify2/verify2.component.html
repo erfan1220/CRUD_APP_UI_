@@ -1,7 +1,17 @@
+<div
+  class="absolute top-6 bg-black text-white rounded-lg p-3 right-2/5 error-box"
+  [ngClass]="{
+    show: show
+  }"
+>
+  <p>The entered code is incorrect !</p>
+</div>
 <div class="flex flex-col w-full container p-4">
   <div class="mt-8 mb-4 flex flex-col justify-between">
     <p class="flex justify-center mb-6 font-bold text-3xl">Sign in/up</p>
-    <p class="flex justify-center mt-6 py-5 text-xl relative top-8">WELCOME :)</p>
+    <p class="flex justify-center mt-6 py-5 text-xl relative top-8">
+      Enter your password
+    </p>
   </div>
   <div class="">
     <form
@@ -13,46 +23,27 @@
       <label class="input-label">
         <div class="relative w-full">
           <input
-            type="email"
-            formControlName="EmailInput"
+            type="password"
+            formControlName="PasswordInput"
             class="rounded-lg border-1 h-10 w-full border-[#9e9e9e] outline-none p-2"
             (focus)="isFocused = true"
             (blur)="isFocused = false"
-            (input)="isInValid = false"
             (input)="onchange($event)"
-            [ngClass]="{
-              error_border: isInValid,
-            }"
           />
 
           <span
             class="absolute left-2.5 text-gray-500 text-sm top-2.5 transition-all duration-300 ease-in"
             [ngClass]="{
-              active: isFocused || loginForm.get('EmailInput')?.value
+              active: isFocused || loginForm.get('PasswordInput')?.value
             }"
-            >Email</span
+            >password</span
           >
         </div>
-        <p
-          id="error"
-          class="Error absolute left-6 text-red-600 text-sm"
-          [ngClass]="{
-            error_text: isEmpty
-          }"
-        >
-          Please enter your email !
-        </p>
-        <p
-          id="error"
-          class="Error absolute left-6 text-red-600 text-sm"
-          [ngClass]="{
-            error_text: isInValid
-          }"
-        >
-          Please enter correct email !
-        </p>
       </label>
-      <button type="submit" class="h-10 rounded-xl text-white text-xl relative bottom-15">
+      <button
+        type="submit"
+        class="h-10 rounded-xl text-white text-xl relative bottom-15"
+      >
         send code
       </button>
     </form>

@@ -26,6 +26,7 @@ export class LoginComponent {
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
 
+
   loginForm: FormGroup = new FormGroup({});
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -46,17 +47,15 @@ export class LoginComponent {
         .subscribe({
           next: (res) => {
             const { data, message } = res;
-            console.log(res);
             localStorage.setItem('email', this.value);
             localStorage.setItem('token', data);
             localStorage.setItem('state', message);
-            this.router.navigate(['/verify'])
+            this.router.navigate(['../auth/verify'])
           },
           error: (err) => {
             console.log(err);
           },
         });
-      this.router.navigate(['../auth/verify'])
     }
   }
 

@@ -1,35 +1,25 @@
-button {
+.confirm-btn {
   background: linear-gradient(
     90deg,
     rgba(22, 22, 201, 1) 14%,
     rgba(0, 212, 255, 1) 100%
   );
+  outline: none;
 }
-
-.Error {
-  display: none;
+.confirm-btn:disabled {
+  background: #c9c7c7;
+  background: linear-gradient(
+    90deg,
+    rgba(201, 199, 199, 1) 0%,
+    rgba(102, 101, 101, 1) 50%,
+    rgba(56, 56, 56, 1) 100%
+  );
+  outline: none;
 }
 
 input:focus {
-
-  box-shadow: 0px 0px 5px 3px rgb(32, 162, 232);
-}
-
-.error_border {
   outline: none;
-  border: 1px solid #f13838;
-}
-
-.active {
-  color: black;
-  transform: translateY(-200%);
-  left: 8px;
-  transition: 0.3s ease;
-  font-size: 16px;
-  top: 20px;
-}
-.error_text {
-  display: block;
+  box-shadow: 0px 0px 5px 3px rgb(32, 162, 232);
 }
 
 .container {
@@ -39,7 +29,42 @@ input:focus {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
   overflow: hidden;
-  width: 400px;
+  width: 500px;
   max-width: 100%;
   min-height: 400px;
+}
+
+.error-box {
+  opacity: 0;
+  overflow: hidden;
+  transition: all 500ms ease-in;
+}
+.error-box.show {
+  opacity: 1;
+}
+
+#password {
+  transform: translateX(50%);
+}
+.active {
+  transform: translateX(-50%);
+  opacity: 1;
+  transition: all 900ms ease;
+}
+
+div:has(.active):first-of-type {
+  border: 1px solid rgb(216, 211, 211);
+  background-color: rgb(249, 246, 246);
+  border-radius: 10px;
+}
+.img-key {
+  border: 1px solid rgb(216, 211, 211);
+  background-color: rgb(249, 246, 246);
+  border-radius: 10px;
+}
+.use-password {
+  display: none;
+}
+.use-password.show {
+  display: flex;
 }

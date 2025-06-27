@@ -1,0 +1,48 @@
+<div
+  class="top-0 left-0 absolute z-5 w-full h-full bg-[rgba(0,0,0,0.5)] backdrop-blur-xs"
+  *ngIf="isOpen"
+>
+  <div
+    class="absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-lg p-6 z-10 w-[600px] h-[600px] flex flex-col"
+  >
+    <h2 class="mt-5 text-center">Register</h2>
+    <hr class="mt-5 mb-3 text-gray-300" />
+    <form action="" class="flex flex-col flex-grow gap-4 mt-5">
+      <div>
+
+      </div>
+      <input
+        type="text"
+        id="name"
+        placeholder="Enter user name"
+        class="bg-gray-200 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg p-3 focus:bg-white focus:outline-none placeholder:text-gray-500"
+        (input)="onInput($event, 0)"
+      />
+      <hr class="my-4 text-gray-300" />
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter password"
+        class="bg-gray-200 rounded-lg p-3 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] focus:bg-white focus:outline-none placeholder:text-gray-500"
+        (input)="onInput($event, 1)"
+      />
+      <hr class="my-4 text-gray-300" />
+      <input
+        type="text"
+        id="phonenumber"
+        placeholder="Enter phonenumber"
+        class="bg-gray-200 rounded-lg p-3 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] focus:bg-white focus:outline-none placeholder:text-gray-500"
+        (input)="onInput($event, 2)"
+      />
+      <hr class="my-4 text-gray-300" />
+      <label id="email" class="bg-gray-200 rounded-lg p-3">{{ email }}</label>
+      <div class="flex-grow"></div>
+      <button
+        type="submit"
+        class="bg-[linear-gradient(90deg,_rgba(22,22,201,1)_14%,_rgba(0,212,255,1)_100%)] h-10 rounded-xl text-white text-xl cursor-pointer"
+      >
+        Register
+      </button>
+    </form>
+  </div>
+</div>

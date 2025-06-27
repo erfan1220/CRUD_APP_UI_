@@ -16,6 +16,10 @@ export const AuthRoutes: Route[] = [
                 loadComponent: () => import('./components/verify/verify.component').then(c => c.VerifyComponent)
             },
             {
+                path: 'verify2',
+                loadComponent: () => import('./components/verify2/verify2.component').then(c=> c.Verify2Component)
+            },
+            {
                 path: '**',
                 redirectTo: 'login',
             },
