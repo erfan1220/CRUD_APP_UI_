@@ -1,79 +1,77 @@
-<div
-  class="top-0 left-0 absolute z-5 w-full h-full bg-[rgba(0,0,0,0.5)] backdrop-blur-xs"
-  *ngIf="isOpen"
->
+<div class="top-0 left-0 absolute z-5 w-full h-full bg-[rgba(0,0,0,0.5)] backdrop-blur-xs" *ngIf="isOpen">
   <div
-    class="absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-lg p-6 z-10 w-[600px] h-[600px] flex flex-col"
-  >
+    class="absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-lg p-6 z-10 w-[600px] h-[700px] flex flex-col">
     <h2 class="mt-5 text-center font-bold text-2xl">Register</h2>
     <hr class="mt-3 text-gray-300" />
-    <form
-      action=""
-      [formGroup]="registerForm"
-      (ngSubmit)="onSubmit()"
-      class="flex flex-col flex-grow gap-4 mt-5"
-    >
-      <div></div>
+    <form action="" [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col flex-grow gap-4 mt-5"
+      name="registerForm">
       <label for="name" class="flex flex-col gap-1">
         <span class="relative left-2">Full Name</span>
-        <input
-          type="text"
-          id="name"
-          formControlName="nameInput"
-          class="bg-gray-200 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg p-3 focus:bg-white focus:outline-none placeholder:text-gray-500"
-          (input)="onInput($event, 0)"
-        />
+        <input type="text" id="name" formControlName="nameInput"
+          class="bg-gray-200 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg p-3 focus:bg-white focus:outline-none placeholder:text-gray-500 test"
+          (input)="onInput($event, 0)" />
+        <div
+          *ngIf="registerForm.get('nameInput')?.invalid && (registerForm.get('nameInput')?.touched || registerForm.get('nameInput')?.dirty)">
+          <div *ngIf="registerForm.get('nameInput')?.errors?.['required']" class="text-xs text-red-500 relative left-2">
+            Name is required
+          </div>
+          <div *ngIf="registerForm.get('nameInput')?.errors?.['minlength']"
+            class="text-xs text-red-500 relative left-2">Full Name must be at
+            least 5 characters</div>
+        </div>
       </label>
       <label for="password" class="flex flex-col gap-1">
         <span class="relative left-2">Password</span>
         <div class="w-full flex">
-          <input
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,32}"
-            [type]="showPassword ? 'text' : 'password'"
-            id="password"
-            formControlName="passwordInput"
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="passwordInput"
             class="w-11/12 bg-gray-200 rounded-l-lg p-3 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] focus:bg-white focus:outline-none placeholder:text-gray-500"
-            (input)="onInput($event, 1)"
-          />
-          <button
-            (click)="togglePassword()"
-            class="bg-gray-200 p-1 h-[48px] w-1/12 relative right-0 rounded-r-lg text-sm flex text-center justify-center items-center"
-          >
-            <mat-icon
-              ><span class="material-symbols-outlined">
+            (input)="onInput($event, 1)" />
+          <button (click)="togglePassword()"
+            class="bg-gray-200 p-1 h-[48px] w-1/12 relative right-0 rounded-r-lg text-sm flex text-center justify-center items-center">
+            <mat-icon><span class="material-symbols-outlined">
                 {{ showPassword ? "visibility_off" : "visibility" }}
-              </span></mat-icon
-            >
+              </span></mat-icon>
           </button>
         </div>
+        <div
+          *ngIf="registerForm.get('passwordInput')?.invalid && (registerForm.get('passwordInput')?.touched || registerForm.get('passwordInput')?.dirty)">
+          <div *ngIf="registerForm.get('passwordInput')?.errors?.['required']"
+            class="text-xs text-red-500 relative left-2">
+            Password is required
+          </div>
+          <div
+            *ngIf="registerForm.get('passwordInput')?.errors?.['pattern'] || registerForm.get('passwordInput')?.errors?.['minlength']"
+            class="text-xs text-red-500 relative left-2">Your password must be at least 8 characters long and include at
+            least one uppercase letter, one lowercase letter, one number, and one special character (e.g., !, #).
+          </div>
+        </div>
+
+
       </label>
       <label for="phonenumber" class="flex flex-col gap-1">
         <span class="relative left-2">Phone Number</span>
-        <input
-          (keypress)="onlyNumber($event)"
-          maxlength="11"
-          minlength="11"
-          pattern="(09)[0-9]{9}"
-          type="text"
-          id="phonenumber"
-          formControlName="phoneNumberInput"
+        <input (keypress)="onlyNumber($event)" maxlength="11" minlength="11" pattern="(09)[0-9]{9}" type="text"
+          id="phonenumber" formControlName="phoneNumberInput"
           class="bg-gray-200 rounded-lg p-3 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] focus:bg-white focus:outline-none placeholder:text-gray-500"
-          (input)="onInput($event, 2)"
-        />
+          (input)="onInput($event, 2)" />
+        <div
+          *ngIf="registerForm.get('phoneNumberInput')?.invalid && (registerForm.get('phoneNumberInput')?.touched || registerForm.get('phoneNumberInput')?.dirty)">
+          <div *ngIf="registerForm.get('phoneNumberInput')?.errors?.['required']"
+            class="text-xs text-red-500 relative left-2">
+            Phone Number is required
+          </div>
+          <div *ngIf="registerForm.get('phoneNumberInput')?.errors?.['pattern']"
+            class="text-xs text-red-500 relative left-2">Please enter a valid number.
+          </div>
+        </div>
       </label>
       <div class="flex flex-col gap-1">
         <span class="relative left-2">Email</span>
-        <label
-          id="email"
-          class="bg-gray-200 rounded-lg p-3 cursor-not-allowed"
-          >{{ email }}</label
-        >
+        <label id="email" class="bg-gray-200 rounded-lg p-3 cursor-not-allowed">{{ email }}</label>
       </div>
       <div class="flex-grow"></div>
-      <button
-        type="submit"
-        class="bg-[linear-gradient(90deg,_rgba(22,22,201,1)_14%,_rgba(0,212,255,1)_100%)] h-12 rounded-xl text-white text-xl cursor-pointer"
-      >
+      <button type="submit"
+        class="bg-[linear-gradient(90deg,_rgba(22,22,201,1)_14%,_rgba(0,212,255,1)_100%)] h-12 rounded-xl text-white text-xl cursor-pointer outline-none">
         Register
       </button>
     </form>

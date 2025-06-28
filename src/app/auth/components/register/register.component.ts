@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, inject, Input } from '@angular/core';
 import {
   FormBuilder,
@@ -8,6 +9,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
+import { TokenService } from '../../../services/token.service';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class RegisterComponent {
   @Input() isOpen = false;
 
+  token = localStorage.getItem('token');
   email = localStorage.getItem('email');
 
   username = '';
@@ -27,18 +31,21 @@ export class RegisterComponent {
   imageSrc: string = 'Register.png';
 
   private formBuilder: FormBuilder = inject(FormBuilder);
+  private http: HttpClient = inject(HttpClient);
+  private router: Router = inject(Router);
+  private tokenservice: TokenService = inject(TokenService);
 
   registerForm: FormGroup = new FormGroup({});
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      nameInput: ['', [Validators.required]],
+      nameInput: ['', [Validators.required, Validators.minLength(5)]],
       passwordInput: [
         '',
         [
           Validators.required,
           Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[!@#$%^&*]).{8,32}'
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).*$'
           ),
           Validators.minLength(8),
         ],
@@ -64,10 +71,36 @@ export class RegisterComponent {
       this.phonenumber = input.value;
     }
   }
+  //================================
   onSubmit() {
     if (this.registerForm.invalid) {
+    } else {
+      // const mail = this.tokenservice.getUserEmail(this.token!)
+
+      const requestBody = {
+        name: this.username,
+        email: this.email,
+        password: this.password,
+        phonenumber: this.phonenumber,
+      };
+      this.http
+        .post<any>('http://localhost:5000/user/register', requestBody)
+        .subscribe({
+          next: (res) => {
+            const { data } = res;
+            this.tokenservice.storeToken(data);
+            this.router.navigate(['main-page'], { replaceUrl: true });
+          },
+          error: (err) => {
+            const { status } = err;
+            if (status == 409) {
+            } else {
+            }
+          },
+        });
     }
   }
+  //=====================
 
   togglePassword() {
     this.showPassword = !this.showPassword;

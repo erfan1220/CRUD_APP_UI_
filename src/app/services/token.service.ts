@@ -13,7 +13,7 @@ interface JwtPayload {
   providedIn: 'root',
 })
 export class TokenService {
-  constructor() {}
+  constructor() { }
 
   decodeToken(token: string): JwtPayload | null {
     try {
@@ -27,6 +27,11 @@ export class TokenService {
   getUserRole(token: string): string | null {
     const decoded = this.decodeToken(token);
     return decoded?.role || null;
+  }
+
+  getUserEmail(token: string): string | null {
+    const decoded = this.decodeToken(token);
+    return decoded?.email || null;
   }
 
   storeToken(token: string): void {

@@ -8,11 +8,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { flatMap } from 'rxjs';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, HttpClientModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, HttpClientModule, MatIcon],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -21,6 +23,7 @@ export class LoginComponent {
   isInValid = false;
   isFocused = false;
   value = '';
+  loading = false;
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private http: HttpClient = inject(HttpClient);
@@ -39,6 +42,7 @@ export class LoginComponent {
       this.isInValid = true;
     } else {
       this.isInValid = false;
+      this.loading = true;
       const requestBody = {
         user_email: this.value,
       };

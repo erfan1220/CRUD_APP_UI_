@@ -33,6 +33,7 @@ export class VerifyComponent {
   mail = localStorage.getItem('email');
   token = localStorage.getItem('token');
   state = localStorage.getItem('state');
+
   text = '';
   value = new Array(6);
   code = '';
@@ -175,27 +176,6 @@ export class VerifyComponent {
         });
     } else if (this.state == '-1') {
       this.isOpen = true;
-      const requestBody = {
-        name: 12,
-        email: 12,
-        password: 12,
-        phonenumber: 12,
-      };
-      this.http
-        .post<any>('http://localhost:5000/user/register', requestBody)
-        .subscribe({
-          next: (res) => {
-            const { data } = res;
-            this.tokenservice.storeToken(data);
-            this.router.navigate(['main-page'], { replaceUrl: true });
-          },
-          error: (err) => {
-            const { status } = err;
-            if (status == 409) {
-            } else {
-            }
-          },
-        });
     }
   }
 
