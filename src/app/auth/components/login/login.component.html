@@ -1,45 +1,128 @@
 <div class="flex flex-col w-full container p-4">
   <div class="mt-8 mb-4 flex flex-col justify-between">
     <p class="flex justify-center mb-6 font-bold text-3xl">Sign in/up</p>
-    <p class="flex justify-center mt-6 py-5 text-xl relative top-8">WELCOME :)</p>
+    <p class="flex justify-center mt-6 py-5 text-xl relative top-8">
+      WELCOME :)
+    </p>
   </div>
   <div class="">
-    <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col justify-around min-h-[400px]">
+    <form
+      action=""
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col justify-around min-h-[400px]"
+    >
       <label class="input-label">
         <div class="relative w-full">
-          <input type="email" formControlName="EmailInput"
-            class="rounded-lg border-1 h-10 w-full border-[#9e9e9e] outline-none p-2" (focus)="isFocused = true"
-            (blur)="isFocused = false" (input)="isInValid = false" (input)="onchange($event)" [ngClass]="{
+          <input
+            type="email"
+            formControlName="EmailInput"
+            class="rounded-lg border-1 h-10 w-full border-[#9e9e9e] outline-none p-2"
+            (focus)="isFocused = true"
+            (blur)="isFocused = false"
+            (input)="isInValid = false"
+            (input)="onchange($event)"
+            [ngClass]="{
               error_border: isInValid,
-            }" />
+            }"
+          />
 
-          <span class="absolute left-2.5 text-gray-500 text-sm top-2.5 transition-all duration-300 ease-in" [ngClass]="{
+          <span
+            class="absolute left-2.5 text-gray-500 text-sm top-2.5 transition-all duration-300 ease-in"
+            [ngClass]="{
               active: isFocused || loginForm.get('EmailInput')?.value
-            }">Email</span>
+            }"
+            >Email</span
+          >
         </div>
-        <p id="error" class="Error absolute left-6 text-red-600 text-sm" [ngClass]="{
+        <p
+          id="error"
+          class="Error absolute left-6 text-red-600 text-sm"
+          [ngClass]="{
             error_text: isEmpty
-          }">
+          }"
+        >
           Please enter your email !
         </p>
-        <p id="error" class="Error absolute left-6 text-red-600 text-sm" [ngClass]="{
+        <p
+          id="error"
+          class="Error absolute left-6 text-red-600 text-sm"
+          [ngClass]="{
             error_text: isInValid
-          }">
+          }"
+        >
           Please enter correct email !
         </p>
       </label>
-      @if (!loading) { <button type="submit" class="h-10 rounded-xl text-white text-xl relative bottom-15">
-        send code </button>}
-
-      @if (loading) {
-      <button type="submit" class="h-10 rounded-xl text-white text-xl relative bottom-15">
-        <mat-icon class="relative top-1 animate-spin"><span class="material-symbols-outlined">
-            refresh
-          </span></mat-icon>
+      @if (!loading) {
+      <button
+        type="submit"
+        class="h-10 rounded-xl text-white text-xl relative bottom-15"
+      >
+        send code</button
+      >} @if (loading) {
+      <button
+        type="submit"
+        class="h-10 rounded-xl text-white text-xl relative bottom-15 flex justify-center items-center"
+        disabled
+      >
+        sending...
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 200 200"
+          class="w-10 h-10"
+        >
+          <radialGradient
+            id="a12"
+            cx=".66"
+            fx=".66"
+            cy=".3125"
+            fy=".3125"
+            gradientTransform="scale(1.5)"
+          >
+            <stop offset="0" stop-color="#09FFBB"></stop>
+            <stop offset=".3" stop-color="#09FFBB" stop-opacity=".9"></stop>
+            <stop offset=".6" stop-color="#09FFBB" stop-opacity=".6"></stop>
+            <stop offset=".8" stop-color="#09FFBB" stop-opacity=".3"></stop>
+            <stop offset="1" stop-color="#09FFBB" stop-opacity="0"></stop>
+          </radialGradient>
+          <circle
+            transform-origin="center"
+            fill="none"
+            stroke="url(#a12)"
+            stroke-width="15"
+            stroke-linecap="round"
+            stroke-dasharray="200 1000"
+            stroke-dashoffset="0"
+            cx="100"
+            cy="100"
+            r="70"
+          >
+            <animateTransform
+              type="rotate"
+              attributeName="transform"
+              calcMode="spline"
+              dur="0.4"
+              values="360;0"
+              keyTimes="0;1"
+              keySplines="0 0 1 1"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </circle>
+          <circle
+            transform-origin="center"
+            fill="none"
+            opacity=".2"
+            stroke="#09FFBB"
+            stroke-width="15"
+            stroke-linecap="round"
+            cx="100"
+            cy="100"
+            r="70"
+          ></circle>
+        </svg>
       </button>
       }
-
-
     </form>
   </div>
 </div>

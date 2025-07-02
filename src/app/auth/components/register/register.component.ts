@@ -21,14 +21,16 @@ import { TokenService } from '../../../services/token.service';
 export class RegisterComponent {
   @Input() isOpen = false;
 
-  token = localStorage.getItem('token');
+  // token = localStorage.getItem('token');
   email = localStorage.getItem('email');
 
   username = '';
   password = '';
   phonenumber = '';
-  showPassword: boolean = false;
-  imageSrc: string = 'Register.png';
+  existingUser = false;
+  error_text = 'User with this email or phone numer already registered !';
+  showPassword = false;
+  loading = false;
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private http: HttpClient = inject(HttpClient);
@@ -45,7 +47,7 @@ export class RegisterComponent {
         [
           Validators.required,
           Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).*$'
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[!@#$%^&*]).*$'
           ),
           Validators.minLength(8),
         ],
@@ -73,13 +75,23 @@ export class RegisterComponent {
   }
   //================================
   onSubmit() {
+    // console.log('test');
+    // this.router.navigate(['../'], { replaceUrl: true });
     if (this.registerForm.invalid) {
+      this.error_text =
+        'All fields are required. Complete the form to continue.';
+      this.existingUser = true;
+      setTimeout(() => {
+        this.existingUser = false;
+      }, 3000);
     } else {
       // const mail = this.tokenservice.getUserEmail(this.token!)
+      this.loading = true;
 
       const requestBody = {
         name: this.username,
         email: this.email,
+        // token: this.token,
         password: this.password,
         phonenumber: this.phonenumber,
       };
@@ -89,12 +101,24 @@ export class RegisterComponent {
           next: (res) => {
             const { data } = res;
             this.tokenservice.storeToken(data);
+            localStorage.removeItem('state');
+            localStorage.removeItem('email');
             this.router.navigate(['main-page'], { replaceUrl: true });
           },
           error: (err) => {
+            this.loading = false;
             const { status } = err;
             if (status == 409) {
+              this.existingUser = true;
+              setTimeout(() => {
+                this.existingUser = false;
+              }, 3000);
             } else {
+              this.existingUser = true;
+              this.error_text = 'Some thing went wrong !';
+              setTimeout(() => {
+                this.existingUser = false;
+              }, 3000);
             }
           },
         });
@@ -102,20 +126,16 @@ export class RegisterComponent {
   }
   //=====================
 
-  togglePassword() {
-    this.showPassword = !this.showPassword;
-    if (this.imageSrc === 'Register.png') {
-      this.imageSrc = '';
-    } else {
-      this.imageSrc = 'Register.png';
-    }
-  }
-
   onlyNumber(event: KeyboardEvent) {
     const allowedkeys = ['Enter', 'Backespace'];
     const charCode = event.key;
     if (!/^[0-9]$/.test(charCode) && !allowedkeys.includes(charCode)) {
       event.preventDefault();
     }
+  }
+
+  togglepass() {
+    // this.loading = false;
+    this.showPassword = !this.showPassword;
   }
 }

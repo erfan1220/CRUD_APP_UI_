@@ -8,7 +8,7 @@ export const AdminRoutes: Route[] = [
     component: LayoutComponent,
     children: [
       {
-        path: 'admin',
+        path: '',
         loadComponent: () =>
           import('./admin-page/admin-page.component').then(
             (m) => m.AdminPageComponent

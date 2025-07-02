@@ -34,16 +34,17 @@ export class VerifyComponent {
   token = localStorage.getItem('token');
   state = localStorage.getItem('state');
 
-  text = '';
+  text: string = '';
   value = new Array(6);
-  code = '';
-  show = false;
+  code: string = '';
+  show: Boolean = false;
   hover = false;
   use_password = false;
   time = 180;
   Labeltimer = '';
   isDisable = false;
-  isOpen = true;
+  isOpen = false;
+  loading: Boolean = false;
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private http: HttpClient = inject(HttpClient);
@@ -110,6 +111,12 @@ export class VerifyComponent {
       this.text = `An account with the email <${this.mail}> does not exist. Enter verification code to create a new account.`;
       this.use_password = false;
     }
+    // if (
+    //   performance.navigation.type === performance.navigation.TYPE_RELOAD
+    // ) {
+    //   console.log('object');
+    //   this.router.navigate(['/auth/login'], { replaceUrl: true });
+    // }
   }
 
   @ViewChildren('in0, in1, in2, in3, in4, in5') inputs!: QueryList<ElementRef>;
@@ -133,13 +140,16 @@ export class VerifyComponent {
   }
 
   onSubmit() {
+    // this.router.navigate(['admin']);
+
     if (this.verifyForm.invalid) {
       this.code = '';
       this.show = true;
       setTimeout(() => {
         this.show = false;
       }, 3000);
-    } else if (this.state == '1') {
+    } else {
+      this.loading = true;
       for (let i = 0; i < 6; i++) {
         this.code += this.value[i];
       }
@@ -155,16 +165,24 @@ export class VerifyComponent {
             const { status, data } = res;
             if (status == 200) {
               this.tokenservice.storeToken(data);
-              const role = this.tokenservice.getUserRole(data);
-              // console.log(role);
-              if (role == 'user') {
-                this.router.navigate(['main-page'], { replaceUrl: true });
-              } else if (role == 'admin') {
-                this.router.navigate(['admin'], { replaceUrl: true });
+              if (this.state == '1') {
+                const role = this.tokenservice.getUserRole(data);
+                // console.log(role);
+                localStorage.removeItem('state');
+                localStorage.removeItem('email');
+                if (role == 'user') {
+                  this.router.navigate(['main-page'], { replaceUrl: true });
+                } else if (role == 'admin') {
+                  this.router.navigate(['admin'], { replaceUrl: true });
+                }
+              } else {
+                this.loading = false;
+                this.isOpen = true;
               }
             }
           },
           error: (err) => {
+            this.loading = false;
             const { status } = err;
             console.log(`status is ${status}`);
             this.code = '';
@@ -174,8 +192,6 @@ export class VerifyComponent {
             }, 3000);
           },
         });
-    } else if (this.state == '-1') {
-      this.isOpen = true;
     }
   }
 
@@ -188,7 +204,7 @@ export class VerifyComponent {
   }
   onclick() {
     if (this.state != '-1') {
-      this.router.navigate(['../auth/verify2']);
+      this.router.navigate(['/auth/verify2'], { replaceUrl: true });
     }
   }
   onhover() {
@@ -204,9 +220,10 @@ export class VerifyComponent {
     this.time -= 1;
     this.Labeltimer = `${min}:${second}`;
     if (this.time == 0) {
-      this.isDisable = true;
+      this.loading = false;
       this.Labeltimer = '00:00';
       clearInterval(this.timer);
+      this.router.navigate(['/auth/login'], { replaceUrl: true });
     }
   }, 1000);
 }

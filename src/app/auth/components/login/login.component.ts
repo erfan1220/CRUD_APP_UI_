@@ -9,12 +9,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { flatMap } from 'rxjs';
-import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, HttpClientModule, MatIcon],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -28,7 +26,6 @@ export class LoginComponent {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
-
 
   loginForm: FormGroup = new FormGroup({});
   ngOnInit() {
@@ -54,9 +51,10 @@ export class LoginComponent {
             localStorage.setItem('email', this.value);
             localStorage.setItem('token', data);
             localStorage.setItem('state', message);
-            this.router.navigate(['../auth/verify'])
+            this.router.navigate(['/auth/verify']);
           },
           error: (err) => {
+            this.loading = false;
             console.log(err);
           },
         });
