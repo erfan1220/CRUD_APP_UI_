@@ -1,45 +1,25 @@
-<div
-  class="top-0 left-0 absolute z-5 w-full h-full bg-[rgba(0,0,0,0.5)] backdrop-blur-xs"
-  *ngIf="isOpen"
->
+<div class="top-0 left-0 absolute z-5 w-full h-full bg-[rgba(0,0,0,0.5)] backdrop-blur-xs" *ngIf="modal_open">
   <div
-    class="overflow-hidden absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-lg p-6 z-10 w-[600px] h-[600px] flex flex-col"
-  >
+    class="overflow-hidden absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-lg p-6 z-10 w-[600px] h-[600px] flex flex-col">
     <h2 class="text-center font-bold text-2xl">Register</h2>
     <hr class="mt-2 text-gray-300" />
-    <form
-      action=""
-      [formGroup]="registerForm"
-      (ngSubmit)="onSubmit()"
-      class="flex flex-col flex-grow gap-4 mt-4"
-      name="registerForm"
-    >
+    <form action="" [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col flex-grow gap-4 mt-4"
+      name="registerForm">
       <label for="name" class="flex flex-col gap-1">
         <span class="relative left-2">Full Name</span>
-        <input
-          type="text"
-          id="name"
-          formControlName="nameInput"
+        <input type="text" id="name" formControlName="nameInput"
           class="bg-gray-200 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg p-3 focus:bg-white focus:outline-none placeholder:text-gray-500 test"
-          (input)="onInput($event, 0)"
-        />
-        <div
-          *ngIf="
+          (input)="onInput($event, 0)" />
+        <div *ngIf="
             registerForm.get('nameInput')?.invalid &&
             (registerForm.get('nameInput')?.touched ||
               registerForm.get('nameInput')?.dirty)
-          "
-        >
-          <div
-            *ngIf="registerForm.get('nameInput')?.errors?.['required']"
-            class="text-xs text-red-500 relative left-2"
-          >
+          ">
+          <div *ngIf="registerForm.get('nameInput')?.errors?.['required']" class="text-xs text-red-500 relative left-2">
             Name is required
           </div>
-          <div
-            *ngIf="registerForm.get('nameInput')?.errors?.['minlength']"
-            class="text-xs text-red-500 relative left-2"
-          >
+          <div *ngIf="registerForm.get('nameInput')?.errors?.['minlength']"
+            class="text-xs text-red-500 relative left-2">
             Full Name must be at least 5 characters
           </div>
         </div>
@@ -47,42 +27,28 @@
       <label for="password" class="flex flex-col gap-1">
         <span class="relative left-2">Password</span>
         <div class="w-full flex">
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            id="password"
-            formControlName="passwordInput"
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="passwordInput"
             class="w-11/12 bg-gray-200 rounded-l-lg p-3 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] focus:bg-white focus:outline-none placeholder:text-gray-500"
-            (input)="onInput($event, 1)"
-          />
-          <button
-          type="button"
-            (click)="togglepass()"
-            class="bg-gray-200 p-1 h-[48px] w-1/12 relative right-0 rounded-r-lg text-sm flex text-center justify-center items-center"
-          >
-            <mat-icon
-              ><span class="material-symbols-outlined">
+            (input)="onInput($event, 1)" />
+          <button type="button" (click)="togglepass()"
+            class="bg-gray-200 p-1 h-[48px] w-1/12 relative right-0 rounded-r-lg text-sm flex text-center justify-center items-center">
+            <mat-icon><span class="material-symbols-outlined">
                 {{ showPassword ? "visibility_off" : "visibility" }}
-              </span></mat-icon
-            >
+              </span></mat-icon>
           </button>
         </div>
-        <div
-          *ngIf="
+        <div *ngIf="
             registerForm.get('passwordInput')?.invalid &&
             (registerForm.get('passwordInput')?.touched ||
               registerForm.get('passwordInput')?.dirty)
-          "
-        >
-          <div
-            *ngIf="registerForm.get('passwordInput')?.errors?.['required']"
-            class="text-xs text-red-500 relative left-2"
-          >
+          ">
+          <div *ngIf="registerForm.get('passwordInput')?.errors?.['required']"
+            class="text-xs text-red-500 relative left-2">
             Password is required
           </div>
           <div
             *ngIf="registerForm.get('passwordInput')?.errors?.['pattern'] || registerForm.get('passwordInput')?.errors?.['minlength']"
-            class="text-xs text-red-500 relative left-2"
-          >
+            class="text-xs text-red-500 relative left-2">
             Your password must be at least 8 characters long and include at
             least one uppercase letter, one lowercase letter, one number, and
             one special character (e.g., !, #).
@@ -91,125 +57,62 @@
       </label>
       <label for="phonenumber" class="flex flex-col gap-1">
         <span class="relative left-2">Phone Number</span>
-        <input
-          (keypress)="onlyNumber($event)"
-          maxlength="11"
-          minlength="11"
-          pattern="(09)[0-9]{9}"
-          type="text"
-          id="phonenumber"
-          formControlName="phoneNumberInput"
+        <input (keypress)="onlyNumber($event)" maxlength="11" minlength="11" pattern="(09)[0-9]{9}" type="text"
+          id="phonenumber" formControlName="phoneNumberInput"
           class="bg-gray-200 rounded-lg p-3 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] focus:bg-white focus:outline-none placeholder:text-gray-500"
-          (input)="onInput($event, 2)"
-        />
-        <div
-          *ngIf="
+          (input)="onInput($event, 2)" />
+        <div *ngIf="
             registerForm.get('phoneNumberInput')?.invalid &&
             (registerForm.get('phoneNumberInput')?.touched ||
               registerForm.get('phoneNumberInput')?.dirty)
-          "
-        >
-          <div
-            *ngIf="registerForm.get('phoneNumberInput')?.errors?.['required']"
-            class="text-xs text-red-500 relative left-2"
-          >
+          ">
+          <div *ngIf="registerForm.get('phoneNumberInput')?.errors?.['required']"
+            class="text-xs text-red-500 relative left-2">
             Phone Number is required
           </div>
-          <div
-            *ngIf="registerForm.get('phoneNumberInput')?.errors?.['pattern']"
-            class="text-xs text-red-500 relative left-2"
-          >
+          <div *ngIf="registerForm.get('phoneNumberInput')?.errors?.['pattern']"
+            class="text-xs text-red-500 relative left-2">
             Please enter a valid number.
           </div>
         </div>
       </label>
       <div class="flex flex-col gap-1">
         <span class="relative left-2">Email</span>
-        <label
-          id="email"
-          class="bg-gray-200 rounded-lg p-3 cursor-not-allowed"
-          >{{ email }}</label
-        >
+        <label id="email" class="bg-gray-200 rounded-lg p-3 cursor-not-allowed">{{ email }}</label>
       </div>
       <div class="flex-grow"></div>
       @if (!loading) {
-      <button
-        type="submit"
-        class="bg-[linear-gradient(90deg,_rgba(22,22,201,1)_14%,_rgba(0,212,255,1)_100%)] h-12 rounded-xl text-white text-xl cursor-pointer outline-none"
-      >
+      <button type="submit"
+        class="bg-[linear-gradient(90deg,_rgba(22,22,201,1)_14%,_rgba(0,212,255,1)_100%)] h-12 rounded-xl text-white text-xl cursor-pointer outline-none">
         Register
       </button>
       } @if (loading) {
 
-      <button
-      disabled
-        type="submit"
-        class="flex justify-center items-center bg-[linear-gradient(90deg,_rgba(22,22,201,1)_14%,_rgba(0,212,255,1)_100%)] h-12 rounded-xl text-white text-xl cursor-pointer outline-none"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 200 200"
-          class="w-10 h-10"
-        >
-          <radialGradient
-            id="a12"
-            cx=".66"
-            fx=".66"
-            cy=".3125"
-            fy=".3125"
-            gradientTransform="scale(1.5)"
-          >
+      <button disabled type="submit"
+        class="flex justify-center items-center bg-[linear-gradient(90deg,_rgba(22,22,201,1)_14%,_rgba(0,212,255,1)_100%)] h-12 rounded-xl text-white text-xl cursor-pointer outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-10 h-10">
+          <radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)">
             <stop offset="0" stop-color="#09FFBB"></stop>
             <stop offset=".3" stop-color="#09FFBB" stop-opacity=".9"></stop>
             <stop offset=".6" stop-color="#09FFBB" stop-opacity=".6"></stop>
             <stop offset=".8" stop-color="#09FFBB" stop-opacity=".3"></stop>
             <stop offset="1" stop-color="#09FFBB" stop-opacity="0"></stop>
           </radialGradient>
-          <circle
-            transform-origin="center"
-            fill="none"
-            stroke="url(#a12)"
-            stroke-width="15"
-            stroke-linecap="round"
-            stroke-dasharray="200 1000"
-            stroke-dashoffset="0"
-            cx="100"
-            cy="100"
-            r="70"
-          >
-            <animateTransform
-              type="rotate"
-              attributeName="transform"
-              calcMode="spline"
-              dur="0.4"
-              values="360;0"
-              keyTimes="0;1"
-              keySplines="0 0 1 1"
-              repeatCount="indefinite"
-            ></animateTransform>
+          <circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="15" stroke-linecap="round"
+            stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+            <animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="0.4" values="360;0"
+              keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform>
           </circle>
-          <circle
-            transform-origin="center"
-            fill="none"
-            opacity=".2"
-            stroke="#09FFBB"
-            stroke-width="15"
-            stroke-linecap="round"
-            cx="100"
-            cy="100"
-            r="70"
-          ></circle>
+          <circle transform-origin="center" fill="none" opacity=".2" stroke="#09FFBB" stroke-width="15"
+            stroke-linecap="round" cx="100" cy="100" r="70"></circle>
         </svg>
       </button>
       }
     </form>
   </div>
 </div>
-<div
-  class="absolute top-6 bg-black text-white rounded-lg p-3 left-5 error-box z-20"
-  [ngClass]="{
+<div class="absolute top-6 bg-black text-white rounded-lg p-3 left-5 error-box z-20" [ngClass]="{
     show: existingUser
-  }"
->
+  }">
   <p>{{ error_text }}</p>
 </div>

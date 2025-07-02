@@ -6,15 +6,25 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GetProductsService {
+  token = localStorage.getItem('token');
+
+
   private apiUrl = 'http://localhost:5000/admin/products';
 
   private http: HttpClient = inject(HttpClient);
 
   getProducts(): Observable<any> {
-    const token = localStorage.getItem('token');
-    console.log(token);//=====
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    // console.log(token);
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
 
     return this.http.get<any>(this.apiUrl, { headers });
+  }
+
+  deleteProduct(productId: number): Observable<any> {
+    const apiUrl = `http://localhost:5000/admin/products/${productId}`;
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+
+    return this.http.delete<any>(apiUrl, { headers })
   }
 }

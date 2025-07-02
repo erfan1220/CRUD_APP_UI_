@@ -1,9 +1,6 @@
-<div
-  class="absolute top-6 bg-black text-white rounded-lg p-3 right-2/5 error-box"
-  [ngClass]="{
+<div class="absolute top-6 bg-black text-white rounded-lg p-3 right-2/5 error-box" [ngClass]="{
     show: show
-  }"
->
+  }">
   <p>The entered code is incorrect !</p>
 </div>
 <div class="flex flex-col w-full container p-4">
@@ -12,12 +9,7 @@
     <p class="flex justify-center py-5 text-xl relative">Verification Code</p>
   </div>
   <div class="relative">
-    <form
-      action=""
-      [formGroup]="verifyForm"
-      (ngSubmit)="onSubmit()"
-      class="flex flex-col min-h-[400px]"
-    >
+    <form action="" [formGroup]="verifyForm" (ngSubmit)="onSubmit()" class="flex flex-col min-h-[400px]">
       <label class="input-label flex flex-col relative gap-10">
         <div class="px-2 text-gray-400">
           <p class="text-center text-sm felx flex-nowrap">
@@ -25,137 +17,51 @@
           </p>
         </div>
         <div class="relative w-full flex justify-between px-2">
-          <input
-            type="text"
-            class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
-            maxlength="1"
-            formControlName="verifyNum1"
-            #in0
-            (input)="onInput($event, 0)"
-            (keydown)="onKeyPress($event, 0)"
-            (keypress)="onlyNumber($event)"
-          />
-          <input
-            type="text"
-            class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
-            maxlength="1"
-            formControlName="verifyNum2"
-            #in1
-            (input)="onInput($event, 1)"
-            (keydown)="onKeyPress($event, 1)"
-            (keypress)="onlyNumber($event)"
-          />
-          <input
-            type="text"
-            class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
-            maxlength="1"
-            formControlName="verifyNum3"
-            #in2
-            (input)="onInput($event, 2)"
-            (keydown)="onKeyPress($event, 2)"
-            (keypress)="onlyNumber($event)"
-          />
-          <input
-            type="text"
-            class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
-            maxlength="1"
-            formControlName="verifyNum4"
-            #in3
-            (input)="onInput($event, 3)"
-            (keydown)="onKeyPress($event, 3)"
-            (keypress)="onlyNumber($event)"
-          />
-          <input
-            type="text"
-            class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
-            maxlength="1"
-            formControlName="verifyNum5"
-            #in4
-            (input)="onInput($event, 4)"
-            (keydown)="onKeyPress($event, 4)"
-            (keypress)="onlyNumber($event)"
-          />
-          <input
-            type="text"
-            class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
-            maxlength="1"
-            formControlName="verifyNum6"
-            #in5
-            (input)="onInput($event, 5)"
-            (keydown)="onKeyPress($event, 5)"
-            (keypress)="onlyNumber($event)"
-          />
+          <input type="text" class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
+            maxlength="1" formControlName="verifyNum1" #in0 (input)="onInput($event, 0)"
+            (keydown)="onKeyPress($event, 0)" (keypress)="onlyNumber($event)" />
+          <input type="text" class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
+            maxlength="1" formControlName="verifyNum2" #in1 (input)="onInput($event, 1)"
+            (keydown)="onKeyPress($event, 1)" (keypress)="onlyNumber($event)" />
+          <input type="text" class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
+            maxlength="1" formControlName="verifyNum3" #in2 (input)="onInput($event, 2)"
+            (keydown)="onKeyPress($event, 2)" (keypress)="onlyNumber($event)" />
+          <input type="text" class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
+            maxlength="1" formControlName="verifyNum4" #in3 (input)="onInput($event, 3)"
+            (keydown)="onKeyPress($event, 3)" (keypress)="onlyNumber($event)" />
+          <input type="text" class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
+            maxlength="1" formControlName="verifyNum5" #in4 (input)="onInput($event, 4)"
+            (keydown)="onKeyPress($event, 4)" (keypress)="onlyNumber($event)" />
+          <input type="text" class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
+            maxlength="1" formControlName="verifyNum6" #in5 (input)="onInput($event, 5)"
+            (keydown)="onKeyPress($event, 5)" (keypress)="onlyNumber($event)" />
         </div>
       </label>
       @if (!loading) {
-      <button
-        [disabled]="isDisable"
-        type="submit"
-        class="h-10 rounded-xl text-white text-xl relative bottom-10 confirm-btn cursor-pointer mt-38"
-      >
+      <button [disabled]="isDisable" type="submit"
+        class="h-10 rounded-xl text-white text-xl relative bottom-10 confirm-btn cursor-pointer mt-38">
         confirm
       </button>
 
       } @if (loading) {
-      <button
-        [disabled]="isDisable"
-        type="submit"
-        class="flex justify-center items-center h-10 rounded-xl text-white text-xl relative bottom-10 confirm-btn cursor-pointer mt-38"
-      >
+      <button [disabled]="isDisable" type="submit"
+        class="flex justify-center items-center h-10 rounded-xl text-white text-xl relative bottom-10 confirm-btn cursor-pointer mt-38">
         confirm
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 200 200"
-          class="w-10 h-10"
-        >
-          <radialGradient
-            id="a12"
-            cx=".66"
-            fx=".66"
-            cy=".3125"
-            fy=".3125"
-            gradientTransform="scale(1.5)"
-          >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-10 h-10">
+          <radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)">
             <stop offset="0" stop-color="#09FFBB"></stop>
             <stop offset=".3" stop-color="#09FFBB" stop-opacity=".9"></stop>
             <stop offset=".6" stop-color="#09FFBB" stop-opacity=".6"></stop>
             <stop offset=".8" stop-color="#09FFBB" stop-opacity=".3"></stop>
             <stop offset="1" stop-color="#09FFBB" stop-opacity="0"></stop>
           </radialGradient>
-          <circle
-            transform-origin="center"
-            fill="none"
-            stroke="url(#a12)"
-            stroke-width="15"
-            stroke-linecap="round"
-            stroke-dasharray="200 1000"
-            stroke-dashoffset="0"
-            cx="100"
-            cy="100"
-            r="70"
-          >
-            <animateTransform
-              type="rotate"
-              attributeName="transform"
-              calcMode="spline"
-              dur="0.4"
-              values="360;0"
-              keyTimes="0;1"
-              keySplines="0 0 1 1"
-              repeatCount="indefinite"
-            ></animateTransform>
+          <circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="15" stroke-linecap="round"
+            stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+            <animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="0.4" values="360;0"
+              keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform>
           </circle>
-          <circle
-            transform-origin="center"
-            fill="none"
-            opacity=".2"
-            stroke="#09FFBB"
-            stroke-width="15"
-            stroke-linecap="round"
-            cx="100"
-            cy="100"
-            r="70"
-          ></circle>
+          <circle transform-origin="center" fill="none" opacity=".2" stroke="#09FFBB" stroke-width="15"
+            stroke-linecap="round" cx="100" cy="100" r="70"></circle>
         </svg>
       </button>
       }
@@ -163,33 +69,16 @@
         <span class="text-sm">{{ Labeltimer }}</span>
       </div>
     </form>
-    <div
-      class="absolute top-1/2 p-1 gap-0.5 use-password"
-      [ngClass]="{
+    <div class="absolute top-1/2 p-1 gap-0.5 use-password" [ngClass]="{
         show: use_password
-      }"
-    >
-      <button
-        class="cursor-pointer"
-        (click)="onclick()"
-        (mouseover)="onhover()"
-        (mouseout)="onout()"
-      >
-        <img
-          src="password.png"
-          alt="password icon"
-          width="25px"
-          height="25px"
-          class="p-1 img-key"
-        />
+      }">
+      <button class="cursor-pointer" (click)="onclick()" (mouseover)="onhover()" (mouseout)="onout()">
+        <img src="password.png" alt="password icon" width="25px" height="25px" class="p-1 img-key" />
       </button>
       <span id="password">
-        <div
-          class="opacity-0"
-          [ngClass]="{
+        <div class="opacity-0" [ngClass]="{
             active: hover
-          }"
-        >
+          }">
           login with password
         </div>
       </span>
@@ -197,5 +86,5 @@
   </div>
 </div>
 <div>
-  <app-register [isOpen]="isOpen"> </app-register>
+  <app-register [modal_open]="modalOpen"> </app-register>
 </div>

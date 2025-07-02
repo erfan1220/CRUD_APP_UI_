@@ -43,7 +43,7 @@ export class VerifyComponent {
   time = 180;
   Labeltimer = '';
   isDisable = false;
-  isOpen = false;
+  modalOpen = false;
   loading: Boolean = false;
 
   private formBuilder: FormBuilder = inject(FormBuilder);
@@ -177,7 +177,7 @@ export class VerifyComponent {
                 }
               } else {
                 this.loading = false;
-                this.isOpen = true;
+                this.modalOpen = true;
               }
             }
           },

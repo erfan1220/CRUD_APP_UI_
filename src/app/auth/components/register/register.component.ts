@@ -19,7 +19,7 @@ import { TokenService } from '../../../services/token.service';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  @Input() isOpen = false;
+  @Input() modal_open = false;
 
   // token = localStorage.getItem('token');
   email = localStorage.getItem('email');
@@ -46,9 +46,10 @@ export class RegisterComponent {
         '',
         [
           Validators.required,
-          Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[!@#$%^&*]).*$'
-          ),
+          // Validators.pattern(
+          //   '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[!@#$%^&*]).*$'
+          // ),
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,32}$'),
           Validators.minLength(8),
         ],
       ],
