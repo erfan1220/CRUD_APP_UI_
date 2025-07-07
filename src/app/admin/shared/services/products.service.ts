@@ -20,7 +20,7 @@ export class GetProductsService {
     return this.http.get<any>(this.apiUrl, { headers });
   }
 
-  deleteProduct(productId: number): Observable<any> {
+  deleteProduct(productId: number | null): Observable<any> {
     const apiUrl = `http://localhost:5000/admin/products/${productId}`;
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);

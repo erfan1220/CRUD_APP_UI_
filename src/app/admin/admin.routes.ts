@@ -10,8 +10,8 @@ export const AdminRoutes: Route[] = [
       {
         path: '',
         loadComponent: () =>
-          import('./admin-page/admin-page.component').then(
-            (m) => m.AdminPageComponent
+          import('./components/all-products/all-products.component').then(
+            (m) => m.AllProductsComponent
           ),
       },
     ],

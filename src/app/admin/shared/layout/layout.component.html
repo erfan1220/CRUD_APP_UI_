@@ -1,2 +1,60 @@
-<!-- <p>test</p> -->
-<router-outlet/>
+<div class="grid" style="grid-template-columns: auto 1fr">
+  <aside
+    class="bg-gray-50 text-gray-700 h-[100vh] p-5 sticky self-start top-0 sidebar border border-solid border-gray-300"
+  >
+    <h3
+      class="text-center mb-5 cursor-pointer hover:bg-gray-200 p-2 rounded-lg flex items-center gap-2"
+      (click)="refresh()"
+    >
+      <mat-icon class="text-gray-500">
+        <span class="material-symbols-outlined"> home </span>
+      </mat-icon>
+      CRUD_APP
+    </h3>
+    <ul>
+      <li
+        class="mb-4 cursor-pointer hover:bg-gray-200 p-2 rounded-lg"
+        *ngFor="let item of menu_items"
+        [ngClass]="{ active: selected === item.name }"
+      >
+        <div class="flex items-center gap-2" (click)="selected = item.name">
+          <mat-icon class="text-gray-500"
+            ><span class="material-symbols-outlined">
+              {{ item.icon }}
+            </span></mat-icon
+          >
+          <span>{{ item.name }}</span>
+        </div>
+        <div
+          class="transition-all duration-300 ease-in-out overflow-hidden"
+          [ngClass]="{
+            'max-h-40 opacity-100': selected === item.name,
+            'max-h-0 opacity-0': selected !== item.name
+          }"
+        >
+          <ul
+            *ngIf="item.children && selected === item.name"
+            class="ml-6 mt-2 submenu"
+          >
+            <div class="overflow-hidden">
+              <li
+                *ngFor="let child of item.children"
+                class="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded-lg text-sm text-gray-600"
+                [ngClass]="{ active: subselected === child.name }"
+                (click)="subselected = child.name"
+              >
+                <span>{{ child.name }}</span>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </aside>
+  <main>
+    <app-all-products *ngIf="selected === 'All Products'"></app-all-products>
+    <app-add-phone
+      *ngIf="selected === 'Add Product' && subselected === 'phone'"
+    ></app-add-phone>
+  </main>
+</div>

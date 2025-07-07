@@ -1,0 +1,16 @@
+.sidebar li.active {
+  background-color: #d1d5db;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.sidebar li.active .material-icons {
+  color: #1f2937;
+}
+.sidebar {
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.submenu li.active{
+  background-color: #f3f4f6;
+}
