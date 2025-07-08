@@ -8,7 +8,7 @@
       <label for="name" class="flex flex-col gap-1">
         <span class="relative left-2">Full Name</span>
         <input type="text" id="name" formControlName="nameInput"
-          class="bg-gray-200 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg p-3 focus:bg-white focus:outline-none placeholder:text-gray-500 test"
+          class="bg-gray-200 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg p-3 focus:bg-white focus:outline-none placeholder:text-gray-500 "
           (input)="onInput($event, 0)" />
         <div *ngIf="
             registerForm.get('nameInput')?.invalid &&
@@ -72,7 +72,7 @@
           </div>
           <div *ngIf="registerForm.get('phoneNumberInput')?.errors?.['pattern']"
             class="text-xs text-red-500 relative left-2">
-            Please enter a valid number.
+            Please enter a valid phone number.
           </div>
         </div>
       </label>
