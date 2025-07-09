@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  inject,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
+import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
@@ -14,9 +8,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { TokenService } from '../../../services/token.service';
-import { RegisterComponent } from '../register/register.component';
+import { RegisterComponent } from '../registerComponents/register/register.component';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { filter, Subscription } from 'rxjs';
+import { ErrorToastComponent } from "../error-toast/error-toast.component";
 @Component({
   selector: 'app-verify',
   imports: [
@@ -25,7 +22,9 @@ import { RegisterComponent } from '../register/register.component';
     CommonModule,
     HttpClientModule,
     RegisterComponent,
-  ],
+    LoadingSpinnerComponent,
+    ErrorToastComponent
+],
   templateUrl: './verify.component.html',
   styleUrl: './verify.component.css',
 })
@@ -37,22 +36,33 @@ export class VerifyComponent {
   text: string = '';
   value = new Array(6);
   code: string = '';
-  show: Boolean = false;
+  show: boolean = false;
   hover = false;
   use_password = false;
   time = 180;
   Labeltimer = '';
   isDisable = false;
   modalOpen = false;
-  loading: Boolean = false;
+  loading: boolean = false;
+  error_text = 'The entered code is incorrect !';
+  index = [0,1,2,3,4,5]
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
   private tokenservice: TokenService = inject(TokenService);
 
+
   verifyForm: FormGroup = new FormGroup({});
   ngOnInit() {
+    this.router.events
+    .pipe(filter(event => event instanceof NavigationStart))
+    .subscribe((event: any) => {
+      if (event.navigationTrigger === 'popstate') {
+        this.ngOnDestroy();
+      }
+    });
+
     this.verifyForm = this.formBuilder.group({
       verifyNum1: [
         '',
@@ -111,15 +121,9 @@ export class VerifyComponent {
       this.text = `An account with the email <${this.mail}> does not exist. Enter verification code to create a new account.`;
       this.use_password = false;
     }
-    // if (
-    //   performance.navigation.type === performance.navigation.TYPE_RELOAD
-    // ) {
-    //   console.log('object');
-    //   this.router.navigate(['/auth/login'], { replaceUrl: true });
-    // }
   }
 
-  @ViewChildren('in0, in1, in2, in3, in4, in5') inputs!: QueryList<ElementRef>;
+  @ViewChildren('codeInput') codeInputs!: QueryList<ElementRef>;
 
   onInput(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
@@ -128,20 +132,18 @@ export class VerifyComponent {
     }
     if (input.value.length == 1 && index < 5) {
       this.value[index] = input.value;
-      this.inputs.toArray()[index + 1].nativeElement.focus();
+      this.codeInputs.get(index + 1)?.nativeElement.focus();
     }
   }
 
   onKeyPress(event: KeyboardEvent, index: number) {
     const input = event.target as HTMLInputElement;
     if (event.key === 'Backspace' && input.value === '' && index > 0) {
-      this.inputs.toArray()[index - 1].nativeElement.focus();
+      this.codeInputs.get(index - 1)?.nativeElement.focus();
     }
   }
 
   onSubmit() {
-    // this.router.navigate(['admin']);
-
     if (this.verifyForm.invalid) {
       this.code = '';
       this.show = true;
@@ -164,6 +166,7 @@ export class VerifyComponent {
           next: (res) => {
             const { status, data } = res;
             if (status == 200) {
+              this.ngOnDestroy();
               this.tokenservice.storeToken(data);
               if (this.state == '1') {
                 const role = this.tokenservice.getUserRole(data);
@@ -204,6 +207,7 @@ export class VerifyComponent {
   }
   onclick() {
     if (this.state != '-1') {
+      this.ngOnDestroy();
       this.router.navigate(['/auth/verify2'], { replaceUrl: true });
     }
   }
@@ -215,15 +219,25 @@ export class VerifyComponent {
   }
 
   timer = setInterval(() => {
-    const min = String(Math.trunc(this.time / 60)).padStart(2, '0');
-    const second = String(this.time % 60).padStart(2, '0');
-    this.time -= 1;
+    if (!localStorage.getItem('time')) {
+      localStorage.setItem('time', String(this.time));
+    }
+    let countDwon = parseInt(localStorage.getItem('time')!);
+    const min = String(Math.trunc(countDwon / 60)).padStart(2, '0');
+    const second = String(countDwon % 60).padStart(2, '0');
+    countDwon -= 1;
+    localStorage.setItem('time', String(countDwon));
     this.Labeltimer = `${min}:${second}`;
-    if (this.time == 0) {
+    if (countDwon == 0) {
       this.loading = false;
       this.Labeltimer = '00:00';
-      clearInterval(this.timer);
+      this.ngOnDestroy();
       this.router.navigate(['/auth/login'], { replaceUrl: true });
     }
   }, 1000);
+
+  ngOnDestroy() {
+    localStorage.removeItem('time');
+    clearInterval(this.timer);
+  }
 }

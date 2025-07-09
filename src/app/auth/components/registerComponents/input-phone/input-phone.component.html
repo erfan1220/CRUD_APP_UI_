@@ -1,0 +1,28 @@
+<label for="phonenumber" class="flex flex-col gap-1">
+  <span class="relative left-2">Phone Number</span>
+  <input
+    (keypress)="onlyNumber($event)"
+    maxlength="11"
+    minlength="11"
+    pattern="(09)[0-9]{9}"
+    type="text"
+    id="phonenumber"
+    [formControl]="control"
+    class="bg-gray-200 rounded-lg p-3 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] focus:bg-white focus:outline-none placeholder:text-gray-500"
+    (input)="onInput($event)"
+  />
+  <div *ngIf="control.invalid && (control.touched || control.dirty)">
+    <div
+      *ngIf="control.errors?.['required']"
+      class="text-xs text-red-500 relative left-2"
+    >
+      Phone Number is required
+    </div>
+    <div
+      *ngIf="control.errors?.['pattern']"
+      class="text-xs text-red-500 relative left-2"
+    >
+      Please enter a valid phone number.
+    </div>
+  </div>
+</label>

@@ -1,4 +1,4 @@
-#password:focus+button {
+/* #password:focus+button {
   outline: none;
   background-color: white;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.15);
@@ -11,4 +11,4 @@
 }
 .error-box.show {
   opacity: 1;
-}
+} */

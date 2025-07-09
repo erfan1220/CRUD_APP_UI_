@@ -1,0 +1,63 @@
+<div
+  class="top-0 left-0 absolute z-5 w-full h-full bg-[rgba(0,0,0,0.5)] backdrop-blur-xs"
+  *ngIf="modal_open"
+>
+  <div
+    class="overflow-hidden absolute top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-lg p-6 z-10 w-[600px] h-[600px] flex flex-col"
+  >
+    <h2 class="text-center font-bold text-2xl">Register</h2>
+    <hr class="mt-2 text-gray-300" />
+    <form
+      action=""
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col flex-grow gap-4 mt-4"
+      name="registerForm"
+    >
+      <app-input-name
+        [control]="nameControl"
+        (inputChange)="onInput($event.event, $event.index)"
+      ></app-input-name>
+      <app-input-password
+        [control]="passwordControl"
+        (passwordChange)="onInput($event.event, $event.index)"
+      ></app-input-password>
+      <app-input-phone
+        [control]="phoneControl"
+        (phoneChange)="onInput($event.event, $event.index)"
+      ></app-input-phone>
+
+      <div class="flex flex-col gap-1">
+        <span class="relative left-2">Email</span>
+        <label
+          id="email"
+          class="bg-gray-200 rounded-lg p-3 cursor-not-allowed"
+          >{{ email }}</label
+        >
+      </div>
+      <div class="flex-grow"></div>
+      @if (!loading) {
+      <button
+        type="submit"
+        class="bg-[linear-gradient(90deg,_rgba(22,22,201,1)_14%,_rgba(0,212,255,1)_100%)] h-12 rounded-xl text-white text-xl cursor-pointer outline-none"
+      >
+        Register
+      </button>
+      } @if (loading) {
+
+      <button
+        disabled
+        type="submit"
+        class="flex justify-center items-center bg-[linear-gradient(90deg,_rgba(22,22,201,1)_14%,_rgba(0,212,255,1)_100%)] h-12 rounded-xl text-white text-xl cursor-pointer outline-none"
+      >
+        <app-loading-spinner></app-loading-spinner>
+      </button>
+      }
+    </form>
+  </div>
+</div>
+
+<app-error-toast
+  [show]="existingUser"
+  [error_text]="error_text"
+></app-error-toast>

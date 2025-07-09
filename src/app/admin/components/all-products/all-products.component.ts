@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { GetProductsService } from '../../shared/services/products.service';
 import { Router } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { DeleteProductModalComponent } from "../delete-product-modal/delete-product-modal.component";
+import { LoadingSvgComponent } from "../loading-svg/loading-svg.component";
 
 @Component({
   selector: 'app-all-products',
-  imports: [CommonModule, DeleteProductModalComponent],
+  imports: [CommonModule, DeleteProductModalComponent, LoadingSvgComponent],
   templateUrl: './all-products.component.html',
   styleUrl: './all-products.component.css',
 })

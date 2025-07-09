@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, Input } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -10,11 +11,26 @@ import {
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { TokenService } from '../../../services/token.service';
+import { TokenService } from '../../../../services/token.service';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { ErrorToastComponent } from '../../error-toast/error-toast.component';
+import { InputNameComponent } from '../input-name/input-name.component';
+import { InputPasswordComponent } from '../input-password/input-password.component';
+import { InputPhoneComponent } from '../input-phone/input-phone.component';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    LoadingSpinnerComponent,
+    ErrorToastComponent,
+    InputNameComponent,
+    InputPasswordComponent,
+    InputPhoneComponent,
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -29,7 +45,6 @@ export class RegisterComponent {
   phonenumber = '';
   existingUser = false;
   error_text = 'User with this email or phone numer already registered !';
-  showPassword = false;
   loading = false;
 
   private formBuilder: FormBuilder = inject(FormBuilder);
@@ -38,6 +53,16 @@ export class RegisterComponent {
   private tokenservice: TokenService = inject(TokenService);
 
   registerForm: FormGroup = new FormGroup({});
+
+  get nameControl(): FormControl {
+    return this.registerForm.get('nameInput') as FormControl;
+  }
+  get passwordControl(): FormControl {
+    return this.registerForm.get('passwordInput') as FormControl;
+  }
+  get phoneControl(): FormControl {
+    return this.registerForm.get('phoneNumberInput') as FormControl;
+  }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -49,7 +74,9 @@ export class RegisterComponent {
           // Validators.pattern(
           //   '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[!@#$%^&*]).*$'
           // ),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,32}$'),
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,32}$'
+          ),
           Validators.minLength(8),
         ],
       ],
@@ -75,9 +102,9 @@ export class RegisterComponent {
     }
   }
   //================================
+  // console.log('test');
+  // this.router.navigate(['../'], { replaceUrl: true });
   onSubmit() {
-    // console.log('test');
-    // this.router.navigate(['../'], { replaceUrl: true });
     if (this.registerForm.invalid) {
       this.error_text =
         'All fields are required. Complete the form to continue.';
@@ -86,13 +113,11 @@ export class RegisterComponent {
         this.existingUser = false;
       }, 3000);
     } else {
-      // const mail = this.tokenservice.getUserEmail(this.token!)
       this.loading = true;
 
       const requestBody = {
         name: this.username,
         email: this.email,
-        // token: this.token,
         password: this.password,
         phonenumber: this.phonenumber,
       };
@@ -110,6 +135,8 @@ export class RegisterComponent {
             this.loading = false;
             const { status } = err;
             if (status == 409) {
+              this.error_text =
+                'User with this email or phone numer already registered !';
               this.existingUser = true;
               setTimeout(() => {
                 this.existingUser = false;
@@ -126,17 +153,4 @@ export class RegisterComponent {
     }
   }
   //=====================
-
-  onlyNumber(event: KeyboardEvent) {
-    const allowedkeys = ['Enter', 'Backespace'];
-    const charCode = event.key;
-    if (!/^[0-9]$/.test(charCode) && !allowedkeys.includes(charCode)) {
-      event.preventDefault();
-    }
-  }
-
-  togglepass() {
-    // this.loading = false;
-    this.showPassword = !this.showPassword;
-  }
 }
