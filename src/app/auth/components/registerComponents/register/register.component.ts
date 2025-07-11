@@ -92,18 +92,20 @@ export class RegisterComponent {
     });
   }
   onInput(event: Event, index: number) {
-    const input = event.target as HTMLInputElement;
-    if (index == 0) {
-      this.username = input.value;
-    } else if (index == 1) {
-      this.password = input.value;
-    } else if (index == 2) {
-      this.phonenumber = input.value;
+    const value = (event.target as HTMLInputElement).value;
+    switch (index) {
+      case 0:
+        this.username = value;
+        break;
+      case 1:
+        this.password = value;
+        break;
+      case 2:
+        this.phonenumber = value;
+        break;
     }
   }
-  //================================
-  // console.log('test');
-  // this.router.navigate(['../'], { replaceUrl: true });
+
   onSubmit() {
     if (this.registerForm.invalid) {
       this.error_text =
@@ -152,5 +154,4 @@ export class RegisterComponent {
         });
     }
   }
-  //=====================
 }

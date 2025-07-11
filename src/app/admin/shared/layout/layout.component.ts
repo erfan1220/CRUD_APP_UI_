@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { AllProductsComponent } from '../../components/all-products/all-products.component';
-import { AddPhoneComponent } from '../../components/add-phone/add-phone.component';
+import { AddPhoneComponent } from '../../components/phone/add-phone/add-phone.component';
 
 @Component({
   selector: 'app-layout',
