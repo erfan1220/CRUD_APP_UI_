@@ -1,21 +1,26 @@
-<form action="" [formGroup]="form">
-  <div class="flex gap-10 p-5">
-    <div class="flex flex-col p-5 gap-7 relative">
-      <div class="bg-gray-300 rounded-lg">
-        <app-basic-info></app-basic-info>
+<form action="" [formGroup]="form" class="p-5 ">
+  <div class="flex flex-col">
+    <div class="flex justify-around p-5 min-h-screen rounded-lg items-start">
+      <div class="flex flex-col p-5 justify-around relative gap-15">
+        <div class="border-2 border-solid border-blue-600 p-5 rounded-lg">
+          <app-basic-info></app-basic-info>
+        </div>
+        <div class="border-2 border-solid border-blue-600 p-5 rounded-lg">
+          <app-advance-info></app-advance-info>
+        </div>
       </div>
-      <div class="bg-gray-300 rounded-lg">
-        <app-advance-info></app-advance-info>
+      <div class="flex flex-col p-5 justify-around gap-15">
+        <div class="flex flex-col border-2 border-solid border-blue-600 p-5 rounded-lg">
+          <app-images></app-images>
+        </div>
+        <div class="overflow-y-scroll border-2 border-solid border-blue-600 p-5 rounded-lg">
+          <app-specifications></app-specifications>
+        </div>
       </div>
     </div>
-    <div class="flex flex-col p-5 gap-7">
-      <div class="flex flex-col gap-5">
-       <app-images></app-images>
-      </div>
-      <div>
-        <app-specifications></app-specifications>
-      </div>
+    <div class="flex justify-center items-center">
+      <button type="submit" class="bg-primary hover:bg-primary-dark rounded-lg w-1/4 px-10 p-1 text-text-primary ">
+        add</button>
     </div>
   </div>
 </form>
-

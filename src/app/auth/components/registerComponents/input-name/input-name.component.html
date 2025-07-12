@@ -1,54 +1,15 @@
-<!-- <label for="name" class="flex flex-col gap-1">
-  <span class="relative left-2">Full Name</span>
-  <input
-    type="text"
-    id="name"
-    formControlName="nameInput"
-    class="bg-gray-200 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg p-3 focus:bg-white focus:outline-none placeholder:text-gray-500"
-    (input)="onInput($event, 0)"
-  />
-  <div
-    *ngIf="
-      registerForm.get('nameInput')?.invalid &&
-      (registerForm.get('nameInput')?.touched ||
-        registerForm.get('nameInput')?.dirty)
-    "
-  >
-    <div
-      *ngIf="registerForm.get('nameInput')?.errors?.['required']"
-      class="text-xs text-red-500 relative left-2"
-    >
-      Name is required
-    </div>
-    <div
-      *ngIf="registerForm.get('nameInput')?.errors?.['minlength']"
-      class="text-xs text-red-500 relative left-2"
-    >
-      Full Name must be at least 5 characters
-    </div>
-  </div>
-</label> -->
+>
 <label for="name" class="flex flex-col gap-1">
   <span class="relative left-2">Full Name</span>
-  <input
-    type="text"
-    id="name"
-    [formControl]="control"
+  <input type="text" id="name" [formControl]="control"
     class="bg-gray-200 focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg p-3 focus:bg-white focus:outline-none placeholder:text-gray-500"
-    (input)="onInput($event)"
-  />
+    (input)="onInput($event)" />
 
   <div *ngIf="control.invalid && (control.touched || control.dirty)">
-    <div
-      *ngIf="control.errors?.['required']"
-      class="text-xs text-red-500 relative left-2"
-    >
+    <div *ngIf="control.errors?.['required']" class="text-xs text-danger relative left-2">
       Name is required
     </div>
-    <div
-      *ngIf="control.errors?.['minlength']"
-      class="text-xs text-red-500 relative left-2"
-    >
+    <div *ngIf="control.errors?.['minlength']" class="text-xs text-danger relative left-2">
       Full Name must be at least 5 characters
     </div>
   </div>

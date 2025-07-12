@@ -1,11 +1,11 @@
-button {
+/* button {
   background: linear-gradient(
     90deg,
     rgba(22, 22, 201, 1) 14%,
     rgba(0, 212, 255, 1) 100%
   );
   outline: none;
-}
+} */
 
 .Error {
   display: none;
@@ -29,6 +29,7 @@ input:focus {
   font-size: 16px;
   top: 20px;
 }
+
 .error_text {
   display: block;
 }

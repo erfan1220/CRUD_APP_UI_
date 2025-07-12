@@ -1,15 +1,12 @@
 <div *ngIf="modalOpen" class="fixed inset-0 bg-[rgba(0,0,0,0.4)] z-5">
   <div
-    class="overflow-hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 z-10 min-w-[460px] max-h-[80vh]"
-  >
+    class="overflow-hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 z-10 min-w-[460px] max-h-[80vh]">
     <div class="flex justify-between items-center">
       <p class="font-bold text-lg">
         Are you sure you want to delete this product?
       </p>
       <div class="cursor-pointer" (click)="closeModal()">
-        <mat-icon
-          ><span class="material-symbols-outlined"> close </span></mat-icon
-        >
+        <mat-icon><span class="material-symbols-outlined"> close </span></mat-icon>
       </div>
     </div>
     <hr class="mt-2 text-gray-300" />
@@ -19,18 +16,13 @@
         from the system.
       </p>
       <div class="relative flex items-center gap-4 mt-7">
-        <button
-          class="bg-white border border-solid border-red-500 text-red-500 rounded-lg p-2 px-4 cursor-pointer"
-          (click)="closeModal()"
-        >
+        <button class="bg-white border border-solid border-danger text-danger rounded-lg p-2 px-4 cursor-pointer"
+          (click)="closeModal()">
           <div class="flex justify-center items-center relative grow">
             Cancel
           </div>
         </button>
-        <button
-          class="bg-red-500 text-white rounded-lg outline-none p-2 px-4 cursor-pointer"
-          (click)="confirm()"
-        >
+        <button class="bg-red-500 text-white rounded-lg outline-none p-2 px-4 cursor-pointer" (click)="confirm()">
           <div class="flex justify-center items-center relative grow">
             Delete
           </div>

@@ -24,7 +24,7 @@ import { ErrorToastComponent } from "../error-toast/error-toast.component";
     RegisterComponent,
     LoadingSpinnerComponent,
     ErrorToastComponent
-],
+  ],
   templateUrl: './verify.component.html',
   styleUrl: './verify.component.css',
 })
@@ -41,11 +41,10 @@ export class VerifyComponent {
   use_password = false;
   time = 180;
   Labeltimer = '';
-  isDisable = false;
   modalOpen = false;
   loading: boolean = false;
   error_text = 'The entered code is incorrect !';
-  index = [0,1,2,3,4,5]
+  index = [0, 1, 2, 3, 4, 5]
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private http: HttpClient = inject(HttpClient);
@@ -56,12 +55,12 @@ export class VerifyComponent {
   verifyForm: FormGroup = new FormGroup({});
   ngOnInit() {
     this.router.events
-    .pipe(filter(event => event instanceof NavigationStart))
-    .subscribe((event: any) => {
-      if (event.navigationTrigger === 'popstate') {
-        this.ngOnDestroy();
-      }
-    });
+      .pipe(filter(event => event instanceof NavigationStart))
+      .subscribe((event: any) => {
+        if (event.navigationTrigger === 'popstate') {
+          this.ngOnDestroy();
+        }
+      });
 
     this.verifyForm = this.formBuilder.group({
       verifyNum1: [

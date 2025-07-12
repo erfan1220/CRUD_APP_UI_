@@ -1,21 +1,19 @@
-.confirm-btn {
+/* .confirm-btn {
   background: linear-gradient(
     90deg,
     rgba(22, 22, 201, 1) 14%,
     rgba(0, 212, 255, 1) 100%
   );
   outline: none;
-}
-.confirm-btn:disabled {
+} */
+/* .confirm-btn:disabled {
   background: #c9c7c7;
-  background: linear-gradient(
-    90deg,
-    rgba(201, 199, 199, 1) 0%,
-    rgba(102, 101, 101, 1) 50%,
-    rgba(56, 56, 56, 1) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(201, 199, 199, 1) 0%,
+      rgba(102, 101, 101, 1) 50%,
+      rgba(56, 56, 56, 1) 100%);
   outline: none;
-}
+} */
 
 input:focus {
   outline: none;
@@ -39,6 +37,7 @@ input:focus {
   overflow: hidden;
   transition: all 500ms ease-in;
 }
+
 .error-box.show {
   opacity: 1;
 }
@@ -46,6 +45,7 @@ input:focus {
 #password {
   transform: translateX(50%);
 }
+
 .active {
   transform: translateX(-50%);
   opacity: 1;
@@ -57,14 +57,17 @@ div:has(.active):first-of-type {
   background-color: rgb(249, 246, 246);
   border-radius: 10px;
 }
+
 .img-key {
   border: 1px solid rgb(216, 211, 211);
   background-color: rgb(249, 246, 246);
   border-radius: 10px;
 }
+
 .use-password {
   display: none;
 }
+
 .use-password.show {
   display: flex;
 }

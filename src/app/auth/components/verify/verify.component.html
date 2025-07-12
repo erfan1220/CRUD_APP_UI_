@@ -5,12 +5,7 @@
     <p class="flex justify-center py-5 text-xl relative">Verification Code</p>
   </div>
   <div class="relative">
-    <form
-      action=""
-      [formGroup]="verifyForm"
-      (ngSubmit)="onSubmit()"
-      class="flex flex-col min-h-[400px]"
-    >
+    <form action="" [formGroup]="verifyForm" (ngSubmit)="onSubmit()" class="flex flex-col min-h-[400px]">
       <label class="input-label flex flex-col relative gap-10" for="verify">
         <div class="px-2 text-gray-400">
           <p class="text-center text-sm felx flex-nowrap">
@@ -49,42 +44,31 @@
           </span>
         </div> -->
         <div class="relative w-full flex justify-between px-2">
-          <input
-            *ngFor="let i of index"
-            type="text"
-            class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg"
-            maxlength="1"
-            [formControlName]="'verifyNum' + (i + 1)"
-            #codeInput
-            (input)="onInput($event, i)"
-            (keydown)="onKeyPress($event, i)"
-            (keypress)="onlyNumber($event)"
-            id="verify"
-          />
+          <input *ngFor="let i of index" type="text"
+            class="border-solid border-2 border-gray-500 h-12 w-12 p-2 text-center rounded-lg" maxlength="1"
+            [formControlName]="'verifyNum' + (i + 1)" #codeInput (input)="onInput($event, i)"
+            (keydown)="onKeyPress($event, i)" (keypress)="onlyNumber($event)" id="verify" />
         </div>
       </label>
       @if (!loading) {
-      <button
-        [disabled]="isDisable"
-        type="submit"
-        class="h-10 rounded-xl text-white text-xl relative bottom-10 confirm-btn cursor-pointer mt-38"
-      >
-        confirm
-      </button>
+      <div class="flex mt-24 justify-center items-center gap-2">
+        <button type="submit"
+          class="bg-primary w-1/2 h-10 rounded-xl text-text-primary text-xl confirm-btn outline-none cursor-pointer hover:bg-primary-dark">
+          confirm
+        </button>
+        <div
+          class="w-1/2 h-10 rounded-xl border border-solid border-primary hover:bg-primary hover:text-text-primary outline-none cursor-pointer flex justify-center items-center">
+          <span class="text-lg">{{ Labeltimer }}</span>
+        </div>
+      </div>
 
       } @if (loading) {
-      <button
-        [disabled]="isDisable"
-        type="submit"
-        class="flex justify-center items-center h-10 rounded-xl text-white text-xl relative bottom-10 confirm-btn cursor-pointer mt-38"
-      >
+      <button [disabled]="true" type="submit"
+        class="bg-primary flex justify-center items-center mt-24 h-10 rounded-xl text-text-primary text-xl confirm-btn outline-none cursor-not-allowed">
         confirm
         <app-loading-spinner></app-loading-spinner>
       </button>
       }
-      <div>
-        <span class="text-sm">{{ Labeltimer }}</span>
-      </div>
     </form>
   </div>
 </div>
