@@ -5,7 +5,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, PlatformLocation } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
   FormBuilder,
@@ -18,7 +18,7 @@ import { NavigationStart, Router } from '@angular/router';
 import { TokenService } from '../../../services/token.service';
 import { RegisterComponent } from '../registerComponents/register/register.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
-import { filter, Subscription } from 'rxjs';
+import { filter } from 'rxjs';
 import { ErrorToastComponent } from '../error-toast/error-toast.component';
 @Component({
   selector: 'app-verify',
@@ -56,6 +56,7 @@ export class VerifyComponent {
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
   private tokenservice: TokenService = inject(TokenService);
+  private pl: PlatformLocation = inject(PlatformLocation);
 
   verifyForm: FormGroup = new FormGroup({});
   ngOnInit() {

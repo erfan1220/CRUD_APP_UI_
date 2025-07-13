@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { GetProductsService } from '../../shared/services/products.service';
+import { ProductsService } from '../../shared/services/products.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DeleteProductModalComponent } from "../delete-product-modal/delete-product-modal.component";
@@ -19,7 +19,7 @@ export class AllProductsComponent {
   selectedProductToDelete: number | null = null;
   products: { phone_id: number; name: string }[] = [];
 
-  private producservice: GetProductsService = inject(GetProductsService);
+  private producservice: ProductsService = inject(ProductsService);
   private router: Router = inject(Router);
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class AllProductsComponent {
 
   onDelete() {
     this.producservice.deleteProduct(this.selectedProductToDelete).subscribe({
-      next: () => {},
+      next: () => { },
       error: (err) => {
         console.error('Could not delete product', err);
       },
@@ -59,7 +59,7 @@ export class AllProductsComponent {
     this.router.navigate(['/admin/addproduct']);
   }
 
-  onupdate(){
+  onupdate() {
     this.update.emit();
   }
 }

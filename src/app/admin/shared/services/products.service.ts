@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class GetProductsService {
+export class ProductsService {
   token = localStorage.getItem('token');
 
 
@@ -26,5 +26,10 @@ export class GetProductsService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
 
     return this.http.delete<any>(apiUrl, { headers })
+  }
+
+  addProduct(body: any): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.post<any>(this.apiUrl, body, { headers })
   }
 }

@@ -13,14 +13,16 @@ export class SpecificationsComponent {
   @Output() specsChanged = new EventEmitter<
     { categoryId: number; subCategory: string; value: string }[]
   >();
+  @Output() disable = new EventEmitter<boolean>()
 
   specifications = [
-    { categoryId: -1, subCategory: '', value: '', relatedSubs: [] as string[] }
+    { categoryId: -1, subCategory: '', value: '', relatedSubs: [] as { name: string, id: number }[] }
   ];
   categories: { id: number; name: string }[] = [];
   subcategories: { id: number; category_id: number; name: string }[] = [];
-  related_subs: string[] = [];
+  // related_subs: string[] = [];
   selectedcat = '';
+  isDisable = true;
 
   private rd: ReferenceDataService = inject(ReferenceDataService);
 
@@ -52,7 +54,9 @@ export class SpecificationsComponent {
 
     const related = this.subcategories
       .filter(sub => sub.category_id === categoryId)
-      .map(sub => sub.name);
+      .map(sub => ({
+        name: sub.name, id: sub.id
+      }));
 
     this.specifications[index].relatedSubs = related;
     this.specifications[index].subCategory = '';
@@ -80,8 +84,21 @@ export class SpecificationsComponent {
         subCategory: s.subCategory,
         value: s.value
       }));
+    if (cleaned.length >= 2) {
+      console.log(cleaned);
+      this.isDisable = false
+      this.specsChanged.emit(cleaned);
+      this.disable.emit(this.isDisable)
+    } else {
+      this.isDisable = true;
+      this.disable.emit(this.isDisable)
+    }
 
-    this.specsChanged.emit(cleaned);
+  }
+
+  removeItem(i: number) {
+    this.specifications.splice(i, 1);
+    this.emitMinimalData()
   }
 
 }

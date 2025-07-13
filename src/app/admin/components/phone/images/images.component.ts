@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-images',
@@ -9,6 +8,11 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './images.component.css',
 })
 export class ImagesComponent {
+  @Output() fileChosen = new EventEmitter<File | null>();
+  // @Output() disable = new EventEmitter<string>();
+
+
+
   imagePreviews: string[] = [];
   imageFiles: File[] = [];
   mainImage: File | null = null;
@@ -16,6 +20,7 @@ export class ImagesComponent {
   maxSizeKB: number = 30;
 
   onFilesSelected(event: Event): void {
+
     const input = event.target as HTMLInputElement;
     const maxSizeBytes = this.maxSizeKB * 1024;
 
@@ -44,6 +49,9 @@ export class ImagesComponent {
           this.imagePreviews.push(e.target?.result);
           this.selectedImage =
             this.imagePreviews[this.imagePreviews.length - 1];
+          this.mainImage = this.imageFiles[this.imageFiles.length - 1]
+          // console.log(this.mainImage);
+          this.emitImage();
         };
         reader.readAsDataURL(file);
       });
@@ -54,10 +62,18 @@ export class ImagesComponent {
     this.imagePreviews.splice(index, 1);
     this.imageFiles.splice(index, 1);
     this.selectedImage = this.imagePreviews.at(-1) || '';
+    this.mainImage = this.imageFiles.at(-1) || null
+    this.emitImage();
+    // console.log(this.mainImage);
   }
 
   selectImage(index: number) {
     this.selectedImage = this.imagePreviews[index];
     this.mainImage = this.imageFiles[index];
+    this.emitImage();
+    // console.log(this.mainImage);
+  }
+  emitImage() {
+    this.fileChosen.emit(this.mainImage)
   }
 }

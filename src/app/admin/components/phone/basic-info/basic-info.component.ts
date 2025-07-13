@@ -20,12 +20,14 @@ export class BasicInfoComponent {
     'Seller',
     'Brand',
   ];
+  isDisable = true;
 
   brands: { brands_id: number; name: string }[] = [];
-
   sellers: { seller_id: number; name: string }[] = [];
 
   @Output() formComplete = new EventEmitter<{ [key: string]: string }>();
+  @Output() disable = new EventEmitter<boolean>();
+
 
   private rd: ReferenceDataService = inject(ReferenceDataService);
 
@@ -76,7 +78,12 @@ export class BasicInfoComponent {
       this.basicData['Seller'] != '-1' &&
       this.basicData['Brand'] != '-1'
     ) {
-      this.formComplete.emit();
+      this.isDisable = false;
+      this.disable.emit(this.isDisable);
+      this.formComplete.emit(this.basicData);
+    } else {
+      this.isDisable = true;
+      this.disable.emit(this.isDisable)
     }
   }
 }

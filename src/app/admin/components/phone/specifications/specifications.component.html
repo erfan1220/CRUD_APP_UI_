@@ -1,5 +1,5 @@
-<div class="bg-grey-300 p-3 flex flex-col gap-4 ">
-  <div class="flex gap-3" *ngFor="let spec of specifications; let i = index">
+<div class="bg-grey-300 p-3 flex flex-col gap-4 items-center justify-center">
+  <div class="flex gap-3 items-center justify-center" *ngFor="let spec of specifications; let i = index">
     <select (change)="onChange(i, $event)" [value]="spec.categoryId"
       class="bg-gray-100 rounded-lg py-1.5 px-4 border border-solid border-gray-300 outline-none text-center">
       <option value="-1">Select category</option>
@@ -9,11 +9,18 @@
     <select (change)="onSubChange(i, $event)" [value]="spec.subCategory"
       class="bg-gray-100 rounded-lg py-1.5 px-4 border border-solid border-gray-300 outline-none text-center">
       <option value="">Select subcategory</option>
-      <option *ngFor="let sub of spec.relatedSubs" [value]="sub">{{ sub }}</option>
+      <option *ngFor="let sub of spec.relatedSubs" [value]="sub.id">{{ sub.name }}</option>
     </select>
 
     <input [value]="spec.value" (input)="onValueChange(i, $event)" placeholder="Value"
       class="bg-gray-100 outline-none px-3 p-1 focus:bg-white focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg border border-solid border-gray-300 placeholder:text-gray-400" />
+
+
+    <button class="bg-red-600 hover:bg-red-700 text-white w-4 h-4 " aria-label="Remove" (click)="removeItem(i)">
+      <svg xmlns="http://www.w3.org/2000/svg" class="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
   </div>
 
   <button (click)="addSpecification()"
