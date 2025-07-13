@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { GetProductsService } from '../../shared/services/products.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,8 @@ import { LoadingSvgComponent } from "../loading-svg/loading-svg.component";
   styleUrl: './all-products.component.css',
 })
 export class AllProductsComponent {
+  @Output() update = new EventEmitter<void>();
+
   loading = true;
   modal_open = false;
   selectedProductToDelete: number | null = null;
@@ -55,5 +57,9 @@ export class AllProductsComponent {
 
   addProduct() {
     this.router.navigate(['/admin/addproduct']);
+  }
+
+  onupdate(){
+    this.update.emit();
   }
 }

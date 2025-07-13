@@ -29,6 +29,7 @@ import { Router } from '@angular/router';
 export class AddPhoneComponent {
   private fb: FormBuilder = inject(FormBuilder);
   private router: Router = inject(Router);
+  step: number = 0;
 
   form: FormGroup = this.fb.group({
     name: [''],

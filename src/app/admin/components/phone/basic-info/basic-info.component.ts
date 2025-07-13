@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ReferenceDataService } from '../../../shared/services/reference-data.service';
 import { FormsModule } from '@angular/forms';
 
@@ -11,13 +11,21 @@ import { FormsModule } from '@angular/forms';
 })
 export class BasicInfoComponent {
   basicData: { [key: string]: string } = {};
-  labels = ['Name Product', 'Price', 'Stock', 'Discount'];
+  labels: string[] = ['Name Product', 'Price', 'Stock', 'Discount'];
+  reuireLabels: string[] = [
+    'Name Product',
+    'Price',
+    'Stock',
+    'Discount',
+    'Seller',
+    'Brand',
+  ];
 
   brands: { brands_id: number; name: string }[] = [];
-  selectedBrand = '';
 
   sellers: { seller_id: number; name: string }[] = [];
-  selectedSeller = '';
+
+  @Output() formComplete = new EventEmitter<{ [key: string]: string }>();
 
   private rd: ReferenceDataService = inject(ReferenceDataService);
 
@@ -38,7 +46,7 @@ export class BasicInfoComponent {
   onInput(event: Event, label: string) {
     const value = (event.target as HTMLInputElement).value;
     this.basicData[label] = value;
-    // console.log(this.basicData);
+    this.checkAndEmit();
   }
 
   handleKeyPress(event: KeyboardEvent, label: string) {
@@ -48,6 +56,27 @@ export class BasicInfoComponent {
       if (!/^[0-9]$/.test(charCode) && !allowedkeys.includes(charCode)) {
         event.preventDefault();
       }
+    }
+  }
+
+  onchange(event: Event, index: number) {
+    const value = (event.target as HTMLSelectElement).value;
+    index == 0
+      ? (this.basicData['Brand'] = value)
+      : (this.basicData['Seller'] = value);
+    this.checkAndEmit();
+  }
+
+  private checkAndEmit() {
+    const allFilled = this.reuireLabels.every((label) =>
+      this.basicData[label]?.trim()
+    );
+    if (
+      allFilled &&
+      this.basicData['Seller'] != '-1' &&
+      this.basicData['Brand'] != '-1'
+    ) {
+      this.formComplete.emit();
     }
   }
 }

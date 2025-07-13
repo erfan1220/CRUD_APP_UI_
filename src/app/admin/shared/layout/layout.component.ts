@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { AllProductsComponent } from '../../components/all-products/all-products.component';
 import { AddPhoneComponent } from '../../components/phone/add-phone/add-phone.component';
+import { UpdateComponent } from "../../components/update/update.component";
 
 @Component({
   selector: 'app-layout',
-  imports: [MatIcon, CommonModule, AllProductsComponent,AddPhoneComponent],
+  imports: [MatIcon, CommonModule, AllProductsComponent, AddPhoneComponent, UpdateComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })

@@ -15,10 +15,11 @@
       id="brand"
       name="brand"
       class="bg-gray-100 rounded-lg py-1.5 px-4 border border-solid border-gray-300 outline-none text-center"
+      (change)="onchange($event,0)"
     >
-      <option value="">__Select Brand__</option>
+      <option [value]="-1">__Select Brand__</option>
       <option
-        value=""
+        [value]="brand.brands_id"
         *ngFor="let brand of brands"
         class="bg-white text-[#333] py-1 px-2 flex"
       >
@@ -33,10 +34,11 @@
       id="seller"
       name="seller"
       class="bg-gray-100 rounded-lg py-1.5 px-4 border border-solid border-gray-300 outline-none text-center"
+      (change)="onchange($event,1)"
     >
-      <option value="">__Select Seller__</option>
+      <option [value]="-1">__Select Seller__</option>
       <option
-        value=""
+        [value]="seller.seller_id"
         *ngFor="let seller of sellers"
         class="bg-white text-[#333] py-1 px-2 flex"
       >

@@ -52,9 +52,13 @@
     </ul>
   </aside>
   <main>
-    <app-all-products *ngIf="selected === 'All Products'"></app-all-products>
+    <app-all-products
+      *ngIf="selected === 'All Products'"
+      (update)="selected = 'update'"
+    ></app-all-products>
     <app-add-phone
       *ngIf="selected === 'Add Product' && subselected === 'phone'"
     ></app-add-phone>
+    <app-update *ngIf="selected === 'update'"></app-update>
   </main>
 </div>

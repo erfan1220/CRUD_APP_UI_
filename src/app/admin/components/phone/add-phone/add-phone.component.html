@@ -1,11 +1,25 @@
-<form action="" [formGroup]="form" class="p-5 ">
-  <div class="flex flex-col">
+<form
+  action=""
+  [formGroup]="form"
+  class="p-5 flex items-center justify-center h-full flex-col"
+>
+  <!-- <div class="flex flex-col">
     <div class="flex justify-around p-5 min-h-screen rounded-lg items-start">
-      <div class="flex flex-col p-5 justify-around relative gap-15">
-        <div class="border-2 border-solid border-blue-600 p-5 rounded-lg">
-          <app-basic-info></app-basic-info>
-        </div>
-        <div class="border-2 border-solid border-blue-600 p-5 rounded-lg">
+      <div class="flex flex-col p-5 justify-around relative gap-15"> -->
+  <div
+    class="border-2 w-1/2 border-solid border-blue-600 p-5 rounded-lg m-auto"
+    [ngClass]=""
+  >
+    @if(step === 0){
+    <app-basic-info></app-basic-info>
+    }@if (step === 1) {<app-advance-info></app-advance-info>} @if (step === 2)
+    {<app-specifications></app-specifications>} @if (step === 3) {<app-images
+    ></app-images>}
+  </div>
+  <button class="bg-black text-text-primary w-1/4 rounded-lg p-0.5 px-2">
+    Next
+  </button>
+  <!-- <div class="border-2 border-solid border-blue-600 p-5 rounded-lg">
           <app-advance-info></app-advance-info>
         </div>
       </div>
@@ -22,5 +36,5 @@
       <button type="submit" class="bg-primary hover:bg-primary-dark rounded-lg w-1/4 px-10 p-1 text-text-primary ">
         add</button>
     </div>
-  </div>
+  </div> -->
 </form>

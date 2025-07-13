@@ -1,4 +1,10 @@
-import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
@@ -13,7 +19,7 @@ import { TokenService } from '../../../services/token.service';
 import { RegisterComponent } from '../registerComponents/register/register.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { filter, Subscription } from 'rxjs';
-import { ErrorToastComponent } from "../error-toast/error-toast.component";
+import { ErrorToastComponent } from '../error-toast/error-toast.component';
 @Component({
   selector: 'app-verify',
   imports: [
@@ -23,7 +29,7 @@ import { ErrorToastComponent } from "../error-toast/error-toast.component";
     HttpClientModule,
     RegisterComponent,
     LoadingSpinnerComponent,
-    ErrorToastComponent
+    ErrorToastComponent,
   ],
   templateUrl: './verify.component.html',
   styleUrl: './verify.component.css',
@@ -44,21 +50,20 @@ export class VerifyComponent {
   modalOpen = false;
   loading: boolean = false;
   error_text = 'The entered code is incorrect !';
-  index = [0, 1, 2, 3, 4, 5]
+  index = [0, 1, 2, 3, 4, 5];
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
   private tokenservice: TokenService = inject(TokenService);
 
-
   verifyForm: FormGroup = new FormGroup({});
   ngOnInit() {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationStart))
+      .pipe(filter((event) => event instanceof NavigationStart))
       .subscribe((event: any) => {
         if (event.navigationTrigger === 'popstate') {
-          this.ngOnDestroy();
+          this.cleanup();
         }
       });
 
@@ -165,7 +170,7 @@ export class VerifyComponent {
           next: (res) => {
             const { status, data } = res;
             if (status == 200) {
-              this.ngOnDestroy();
+              this.cleanup();
               this.tokenservice.storeToken(data);
               if (this.state == '1') {
                 const role = this.tokenservice.getUserRole(data);
@@ -206,7 +211,7 @@ export class VerifyComponent {
   }
   onclick() {
     if (this.state != '-1') {
-      this.ngOnDestroy();
+      this.cleanup();
       this.router.navigate(['/auth/verify2'], { replaceUrl: true });
     }
   }
@@ -230,12 +235,12 @@ export class VerifyComponent {
     if (countDwon == 0) {
       this.loading = false;
       this.Labeltimer = '00:00';
-      this.ngOnDestroy();
+      this.cleanup();
       this.router.navigate(['/auth/login'], { replaceUrl: true });
     }
   }, 1000);
 
-  ngOnDestroy() {
+  cleanup() {
     localStorage.removeItem('time');
     clearInterval(this.timer);
   }

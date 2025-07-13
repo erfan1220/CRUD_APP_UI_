@@ -15,7 +15,7 @@
       class="p-4 rounded-lg flex shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] m-3 justify-between items-center relative w-2/3 transition-transform duration-400 hover:-translate-y-1"
     >
       <div class="flex gap-4 items-center">
-        <h3 class="bg-green-400 rounded-full aspect-square p-2 px-3.5">
+        <h3 class="border border-solid border-gray-300 rounded-full aspect-square p-2 px-3.5">
           {{ i + 1 }}
         </h3>
         <h3 class="">{{ product.name }}</h3>
@@ -29,6 +29,7 @@
         </button>
         <button
           class="bg-blue-400 px-8 h-9 rounded-xl cursor-pointer text-white hover:scale-105 hover:bg-blue-600"
+          (click)="onupdate()"
         >
           update
         </button>
