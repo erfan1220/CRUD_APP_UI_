@@ -1,16 +1,68 @@
-.sidebar li.active {
-  background-color: #d1d5db;
-  color: #1f2937;
-  font-weight: 600;
+div.bubble#color-up {
+  width: 10rem;
+  height: 10rem;
+  background: #833AB4;
+  background: linear-gradient(18deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+  z-index: -10;
+  border-radius: 5rem;
+  position: absolute;
+  top: 11rem;
+  left: 50rem;
 }
 
-.sidebar li.active .material-icons {
-  color: #1f2937;
-}
-.sidebar {
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+div.bubble#colorized-up {
+  width: 10rem;
+  height: 10rem;
+  background-image: linear-gradient(45deg, #AC2BCD, #DC5BB4, #ECC5AB);
+  z-index: -10;
+  border-radius: 5rem;
+  position: absolute;
+  top: 22rem;
+  left: 30rem;
 }
 
-.submenu li.active{
-  background-color: #f3f4f6;
+div.bubble#color-mid {
+  width: 15rem;
+  height: 15rem;
+  background: #833AB4;
+  background: linear-gradient(18deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+  z-index: -10;
+  border-radius: 7.5rem;
+  position: absolute;
+  top: 35rem;
+  left: 10rem;
+}
+
+div.bubble#colorized-mid {
+  width: 10rem;
+  height: 10rem;
+  background-image: linear-gradient(45deg, #AC2BCD, #DC5BB4, #ECC5AB);
+  z-index: -10;
+  border-radius: 5rem;
+  position: absolute;
+  top: 3rem;
+  left: 32rem;
+}
+
+div.bubble#color-down {
+  width: 10rem;
+  height: 10rem;
+  background: #833AB4;
+  background: linear-gradient(18deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+  z-index: -10;
+  border-radius: 5rem;
+  position: absolute;
+  bottom: 10rem;
+  right: 25rem;
+}
+
+div.bubble#colorized-down {
+  width: 15rem;
+  height: 15rem;
+  background-image: linear-gradient(45deg, #AC2BCD, #DC5BB4, #ECC5AB);
+  z-index: -10;
+  border-radius: 7.5rem;
+  position: absolute;
+  top: 15.5rem;
+  left: 65rem;
 }

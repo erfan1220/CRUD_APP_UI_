@@ -1,5 +1,5 @@
-import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, inject, Input, input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -56,6 +56,8 @@ export class AddPhoneComponent {
   }
 
   reciveMainImage(file: File | null) {
+    // const file:File | null= event.target.file
+    console.log(file);
     this.fullData['mainImage'] = file
     console.log(this.fullData);
   }
@@ -69,7 +71,7 @@ export class AddPhoneComponent {
     if (this.step === 3) {
       this.isDisable = false;
       this.submitData();
-      window.location.reload();
+      // window.location.reload();
     } else if (this.step === 2) {
       this.isDisable = false
       this.step += 1;
@@ -80,11 +82,28 @@ export class AddPhoneComponent {
   }
 
   submitData() {
-    this.ps.addProduct(this.fullData).subscribe({
+    const formData = new FormData();
+    for (const key in this.fullData) {
+      const value = this.fullData[key];
+      if (key === "specification") {
+        console.log(typeof (value));
+      }
+
+      if (value instanceof File) {
+        console.log("true");
+        formData.append(key, value);
+      } else if (typeof value === 'object') {
+        formData.append(key, JSON.stringify(value));
+      } else if (value !== null && value !== undefined) {
+        formData.append(key, value.toString());
+      }
+    }
+    this.ps.addProduct(formData).subscribe({
       next: () => {
-
-      }, error: () => {
-
+        console.log("add successfully");
+        window.location.reload();
+      }, error: (err) => {
+        console.error(err)
       }
     }
     )

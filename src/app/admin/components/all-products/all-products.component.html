@@ -1,19 +1,11 @@
-<div
-  *ngIf="loading"
-  class="absolute left-0 top-0 w-full h-full overflow-hidden flex justify-center items-center"
->
-<app-loading-svg></app-loading-svg>
+<div *ngIf="loading" class="absolute left-0 top-0 w-full h-full overflow-hidden flex justify-center items-center">
+  <app-loading-svg></app-loading-svg>
 </div>
 
-<div
-  *ngIf="products.length > 0; else noProducts"
-  class="flex flex-col flex-grow min-h-screen"
->
+<div *ngIf="products.length > 0; else noProducts" class="flex flex-col flex-grow min-h-screen">
   <div class="m-2 flex flex-col items-center">
-    <div
-      *ngFor="let product of products; index as i"
-      class="p-4 rounded-lg flex shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] m-3 justify-between items-center relative w-2/3 transition-transform duration-400 hover:-translate-y-1"
-    >
+    <div *ngFor="let product of products; index as i"
+      class="bg-[#FAFAFA] p-4 rounded-lg flex shadow-[0_0_8px_4px_rgba(0,0,0,0.15)] m-3 justify-between items-center relative w-2/3 transition-transform duration-400 hover:-translate-y-1">
       <div class="flex gap-4 items-center">
         <h3 class="border border-solid border-gray-300 rounded-full aspect-square p-2 px-3.5">
           {{ i + 1 }}
@@ -21,16 +13,12 @@
         <h3 class="">{{ product.name }}</h3>
       </div>
       <div class="flex gap-4">
-        <button
-          class="bg-red-400 h-9 px-8 rounded-xl cursor-pointer text-white hover:scale-105 hover:bg-red-600"
-          (click)="confirmDeleteProduct(product.phone_id)"
-        >
+        <button class="bg-red-400 h-9 px-8 rounded-xl cursor-pointer text-white hover:scale-105 hover:bg-red-600"
+          (click)="confirmDeleteProduct(product.phone_id)">
           delete
         </button>
-        <button
-          class="bg-blue-400 px-8 h-9 rounded-xl cursor-pointer text-white hover:scale-105 hover:bg-blue-600"
-          (click)="onupdate()"
-        >
+        <button class="bg-blue-400 px-8 h-9 rounded-xl cursor-pointer text-white hover:scale-105 hover:bg-blue-600"
+          (click)="onupdate()">
           update
         </button>
       </div>
@@ -45,9 +33,6 @@
 </ng-template>
 
 <div>
-  <app-delete-product-modal
-    [modalOpen]="modal_open"
-    (cancelDelete)="closeModal()"
-    (confirmDelete)="onDelete()"
-  ></app-delete-product-modal>
+  <app-delete-product-modal [modalOpen]="modal_open" (cancelDelete)="closeModal()"
+    (confirmDelete)="onDelete()"></app-delete-product-modal>
 </div>
