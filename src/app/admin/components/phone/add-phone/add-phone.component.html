@@ -14,7 +14,8 @@
     }@if (step === 1) {<app-advance-info (formComplete)="receivePartA($event)"
       (disable)="onFromComplete($event)"></app-advance-info>} @if (step === 2)
     {<app-specifications (disable)="onFromComplete($event)" (specsChanged)="receiveSpecs($event)"></app-specifications>}
-    @if (step === 3) {<app-images (fileChosen)="reciveMainImage($event)"></app-images>}
+    @if (step === 3) {<app-images (fileChosen)="reciveMainImage($event)"
+      (disable)="onFromComplete($event)"></app-images>}
   </div>
   <button class=" bg-black text-text-primary w-1/6
      rounded-lg p-1 px-2 disabled:cursor-not-allowed flex items-center justify-center relative mb-5 cursor-pointer"

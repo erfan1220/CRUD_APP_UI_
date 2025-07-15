@@ -2,12 +2,12 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ProductsService } from '../../shared/services/products.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { DeleteProductModalComponent } from "../delete-product-modal/delete-product-modal.component";
 import { LoadingSvgComponent } from "../loading-svg/loading-svg.component";
+import { ModalComponent } from "../../../shared/components/modal/modal.component";
 
 @Component({
   selector: 'app-all-products',
-  imports: [CommonModule, DeleteProductModalComponent, LoadingSvgComponent],
+  imports: [CommonModule, LoadingSvgComponent, ModalComponent],
   templateUrl: './all-products.component.html',
   styleUrl: './all-products.component.css',
 })

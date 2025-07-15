@@ -9,7 +9,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class ImagesComponent {
   @Output() fileChosen = new EventEmitter<File | null>();
-  // @Output() disable = new EventEmitter<string>();
+  @Output() disable = new EventEmitter<boolean>();
 
 
 
@@ -18,6 +18,7 @@ export class ImagesComponent {
   mainImage: File | null = null;
   selectedImage: string = '';
   maxSizeKB: number = 30;
+  isDisable = true;
 
   onFilesSelected(event: Event): void {
 
@@ -49,8 +50,9 @@ export class ImagesComponent {
           this.imagePreviews.push(e.target?.result);
           this.selectedImage =
             this.imagePreviews[this.imagePreviews.length - 1];
-          this.mainImage = this.imageFiles[this.imageFiles.length - 1]
+          this.mainImage = this.imageFiles[this.imageFiles.length - 1];
           // console.log(this.mainImage);
+          // this.isDisable = false
           this.emitImage();
         };
         reader.readAsDataURL(file);
@@ -62,7 +64,8 @@ export class ImagesComponent {
     this.imagePreviews.splice(index, 1);
     this.imageFiles.splice(index, 1);
     this.selectedImage = this.imagePreviews.at(-1) || '';
-    this.mainImage = this.imageFiles.at(-1) || null
+    this.mainImage = this.imageFiles.at(-1) || null;
+    // this.isDisable = true
     this.emitImage();
     // console.log(this.mainImage);
   }
@@ -70,10 +73,18 @@ export class ImagesComponent {
   selectImage(index: number) {
     this.selectedImage = this.imagePreviews[index];
     this.mainImage = this.imageFiles[index];
+    // this.isDisable = false
     this.emitImage();
     // console.log(this.mainImage);
   }
   emitImage() {
-    this.fileChosen.emit(this.mainImage)
+    this.fileChosen.emit(this.mainImage);
+    console.log(this.isDisable);
+    if (this.mainImage) {
+      this.isDisable = false;
+    } else {
+      this.isDisable = true
+    }
+    this.disable.emit(this.isDisable)
   }
 }

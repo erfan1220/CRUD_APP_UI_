@@ -63,18 +63,13 @@ export class AddPhoneComponent {
   }
 
   onFromComplete(data: any) {
-    // console.log(data);
+    console.log(data);
     this.isDisable = data
   }
 
   onclick() {
     if (this.step === 3) {
-      this.isDisable = false;
       this.submitData();
-      // window.location.reload();
-    } else if (this.step === 2) {
-      this.isDisable = false
-      this.step += 1;
     } else {
       this.isDisable = true
       this.step += 1;
