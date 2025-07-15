@@ -12,7 +12,7 @@ import { LoadingSvgComponent } from "../loading-svg/loading-svg.component";
   styleUrl: './all-products.component.css',
 })
 export class AllProductsComponent {
-  @Output() update = new EventEmitter<void>();
+  @Output() update = new EventEmitter<number>();
 
   loading = true;
   modal_open = false;
@@ -59,7 +59,7 @@ export class AllProductsComponent {
     this.router.navigate(['/admin/addproduct']);
   }
 
-  onupdate() {
-    this.update.emit();
+  onupdate(id: number) {
+    this.update.emit(id);
   }
 }

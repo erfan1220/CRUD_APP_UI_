@@ -32,4 +32,10 @@ export class ProductsService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.post<any>(this.apiUrl, body, { headers })
   }
+
+  getDetails(phoneId: number, sellerId: number): Observable<any> {
+    const url = `http://localhost:5000/admin/products/${phoneId}/sellers/${sellerId}/details`;
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.get<any>(url, { headers })
+  }
 }

@@ -11,12 +11,13 @@ import {
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { TokenService } from '../../../../services/token.service';
+import { TokenService } from '../../../../shared/services/token.service';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { ErrorToastComponent } from '../../error-toast/error-toast.component';
 import { InputNameComponent } from '../input-name/input-name.component';
 import { InputPasswordComponent } from '../input-password/input-password.component';
 import { InputPhoneComponent } from '../input-phone/input-phone.component';
+import { ModalComponent } from "../../../../shared/components/modal/modal.component";
 
 @Component({
   selector: 'app-register',
@@ -30,6 +31,7 @@ import { InputPhoneComponent } from '../input-phone/input-phone.component';
     InputNameComponent,
     InputPasswordComponent,
     InputPhoneComponent,
+    ModalComponent
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',

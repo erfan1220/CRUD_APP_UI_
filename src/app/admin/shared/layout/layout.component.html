@@ -1,9 +1,9 @@
 <div class="grid" style="grid-template-columns: auto 1fr">
   <app-sidebar (menu)="onMenu($event)" (submenu)="onSubMenu($event)"></app-sidebar>
   <main>
-    <app-all-products *ngIf="selected === 'All Products'" (update)="selected = 'update'"></app-all-products>
+    <app-all-products *ngIf="selected === 'All Products'" (update)="onUpdate($event)"></app-all-products>
     <app-add-phone *ngIf="selected === 'Add Product' && subselected === 'phone'"></app-add-phone>
-    <app-update *ngIf="selected === 'update'"></app-update>
+    <app-update *ngIf="selected === 'update'" [phoneId]="phoneId"></app-update>
   </main>
   <div class="bubble" id="color-up"></div>
   <div class="bubble" id="color-mid"></div>

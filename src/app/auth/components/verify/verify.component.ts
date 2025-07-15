@@ -15,7 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NavigationStart, Router } from '@angular/router';
-import { TokenService } from '../../../services/token.service';
+import { TokenService } from '../../../shared/services/token.service';
 import { RegisterComponent } from '../registerComponents/register/register.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { filter } from 'rxjs';

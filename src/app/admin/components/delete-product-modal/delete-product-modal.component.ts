@@ -1,10 +1,10 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { ModalComponent } from "../../../shared/components/modal/modal.component";
 
 @Component({
   selector: 'app-delete-product-modal',
-  imports: [MatIcon,CommonModule],
+  imports: [CommonModule, ModalComponent],
   templateUrl: './delete-product-modal.component.html',
   styleUrl: './delete-product-modal.component.css',
 })

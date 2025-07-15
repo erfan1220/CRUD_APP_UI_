@@ -1,1 +1,22 @@
-<p>update works!</p>
+<app-modal [open]="modalOpen" *ngIf="sellers.length > 1"
+    [title]="'Please select the seller for whom you want to update this product\'s information.'"
+    [width]="'min-w-480px'" (close)="closeModal()">
+    <div class="grid grid-cols-2 gap-y-2 gap-x-4">
+        <div class="flex flex-col" *ngFor="let item of sellers">
+            <button class="bg-black text-white rounded-lg cursor-pointer p-1 text-lg"
+                (click)="onclick(item.seller_id)">{{item.name}}</button>
+        </div>
+    </div>
+</app-modal>
+
+<div class="flex flex-col bg-white  shadow-[0_0_8px_4px_rgba(0,0,0,0.15)] p-3">
+    <div class="flex">
+        <p>price , stock</p>
+    </div>
+    <div class="flex flex-col">
+        <p>intro</p>
+    </div>
+    <div>
+        <p>specs</p>
+    </div>
+</div>

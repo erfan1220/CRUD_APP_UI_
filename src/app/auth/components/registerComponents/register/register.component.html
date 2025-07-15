@@ -1,4 +1,4 @@
-<div
+<!-- <div
   class="top-0 left-0 absolute z-5 w-full h-full bg-[rgba(0,0,0,0.5)] backdrop-blur-xs"
   *ngIf="modal_open"
 >
@@ -55,9 +55,31 @@
       }
     </form>
   </div>
-</div>
+</div> -->
+<app-modal [open]="modal_open" [title]="'Register'" [width]="'600px'" [height]="''" (close)="modal_open = false">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col flex-grow gap-4 p-1">
+    <app-input-name [control]="nameControl" (inputChange)="onInput($event.event, $event.index)"></app-input-name>
+    <app-input-password [control]="passwordControl"
+      (passwordChange)="onInput($event.event, $event.index)"></app-input-password>
+    <app-input-phone [control]="phoneControl" (phoneChange)="onInput($event.event, $event.index)"></app-input-phone>
 
-<app-error-toast
-  [show]="existingUser"
-  [error_text]="error_text"
-></app-error-toast>
+    <div class="flex flex-col gap-1">
+      <span class="relative left-2">Email</span>
+      <label class="bg-gray-200 rounded-lg p-3 cursor-not-allowed">{{ email }}</label>
+    </div>
+
+    <div class="flex-grow"></div>
+
+    <button *ngIf="!loading" type="submit"
+      class="bg-gradient-to-r bg-primary hover:bg-primary-dark h-12 rounded-xl text-white text-xl cursor-pointer outline-none">
+      Register
+    </button>
+
+    <button *ngIf="loading" disabled
+      class="flex justify-center items-center bg-gradient-to-r bg-primary h-12 rounded-xl text-white text-xl cursor-not-allowed outline-none">
+      <app-loading-spinner></app-loading-spinner>
+    </button>
+  </form>
+</app-modal>
+
+<app-error-toast [show]="existingUser" [error_text]="error_text"></app-error-toast>

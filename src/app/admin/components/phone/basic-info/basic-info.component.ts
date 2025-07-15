@@ -38,7 +38,7 @@ export class BasicInfoComponent {
       },
     });
 
-    this.rd.getSellers().subscribe({
+    this.rd.getSellers(-1).subscribe({
       next: (data) => {
         this.sellers = data;
       },

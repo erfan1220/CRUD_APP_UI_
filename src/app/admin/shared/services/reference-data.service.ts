@@ -6,10 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ReferenceDataService {
-  constructor() {}
+  constructor() { }
 
   private brands_apiUrl = 'http://localhost:5000/api/brands';
-  private sellers_apiUrl = 'http://localhost:5000/api/sellers';
   private categories_apiUrl = 'http://localhost:5000/api/categories';
   private subcategories_apiUrl = 'http://localhost:5000/api/subcategories';
 
@@ -21,9 +20,10 @@ export class ReferenceDataService {
     );
   }
 
-  getSellers(): Observable<{ seller_id: number; name: string }[]> {
+  getSellers(id: number | null): Observable<{ seller_id: number; name: string }[]> {
+    const sellers_apiUrl = `http://localhost:5000/api/sellers/${id}`;
     return this.http.get<{ seller_id: number; name: string }[]>(
-      this.sellers_apiUrl
+      sellers_apiUrl
     );
   }
 

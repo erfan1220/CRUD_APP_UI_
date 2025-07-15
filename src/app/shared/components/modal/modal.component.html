@@ -1,0 +1,33 @@
+<div *ngIf="open" class="fixed inset-0 bg-[rgba(0,0,0,0.5)] backdrop-blur-xs z-50">
+    <div class="overflow-hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 z-10 min-h-fix"
+        [style.width]="width" [style.height]="height">
+        <div class="flex justify-between items-center mb-2 gap-1" *ngIf="title">
+            <h2 class="text-xl font-bold">{{ title }}</h2>
+            <div class="cursor-pointer flex justify-center items-center" (click)="close.emit()"
+                *ngIf="title != 'Register'">
+                <mat-icon><span class="material-symbols-outlined"> close </span></mat-icon>
+            </div>
+        </div>
+
+        <hr class="text-gray-300 mb-4" *ngIf="title" />
+
+        <div class="overflow-hidden flex flex-col h-full">
+            <ng-content></ng-content>
+        </div>
+
+        <div class="relative flex items-center gap-4 mt-7" *ngIf="confirm.observers.length > 0">
+            <button class="bg-white border border-solid border-danger text-danger rounded-lg p-2 px-4 cursor-pointer"
+                (click)="close.emit()">
+                <div class="flex justify-center items-center relative grow">
+                    Cancel
+                </div>
+            </button>
+            <button class="bg-red-500 text-white rounded-lg outline-none p-2 px-4 cursor-pointer"
+                (click)="confirm.emit()">
+                <div class="flex justify-center items-center relative grow">
+                    Confirm
+                </div>
+            </button>
+        </div>
+    </div>
+</div>
