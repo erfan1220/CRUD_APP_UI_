@@ -20,7 +20,7 @@ export class ReferenceDataService {
     );
   }
 
-  getSellers(id: number | null): Observable<{ seller_id: number; name: string }[]> {
+  getSellers(id?: number | null): Observable<{ seller_id: number; name: string }[]> {
     const sellers_apiUrl = `http://localhost:5000/api/sellers/${id}`;
     return this.http.get<{ seller_id: number; name: string }[]>(
       sellers_apiUrl

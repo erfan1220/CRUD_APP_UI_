@@ -10,7 +10,6 @@ import { BasicInfoComponent } from '../basic-info/basic-info.component';
 import { AdvanceInfoComponent } from '../advance-info/advance-info.component';
 import { ImagesComponent } from '../images/images.component';
 import { SpecificationsComponent } from '../specifications/specifications.component';
-import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { ProductsService } from '../../../shared/services/products.service';
 
@@ -37,7 +36,6 @@ export class AddPhoneComponent {
   step: number = 0;
 
   private fb: FormBuilder = inject(FormBuilder);
-  private router: Router = inject(Router);
   private ps: ProductsService = inject(ProductsService);
 
   form: FormGroup = this.fb.group({

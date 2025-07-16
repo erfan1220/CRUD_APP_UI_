@@ -15,7 +15,7 @@ import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 export class LayoutComponent {
   selected = 'All Products';
   subselected = 'phone';
-  phoneId: number | null = null;
+  phoneId: number | undefined;
 
   onSubMenu(submenu: string) {
     this.subselected = submenu;

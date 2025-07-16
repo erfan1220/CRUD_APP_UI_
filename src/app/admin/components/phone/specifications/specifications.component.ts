@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ReferenceDataService } from '../../../shared/services/reference-data.service';
 import { FormsModule } from '@angular/forms';
 
@@ -14,13 +14,10 @@ export class SpecificationsComponent {
     { categoryId: number; subCategory: string; value: string }[]
   >();
   @Output() disable = new EventEmitter<boolean>()
+  @Input() specifications: { categoryId: number, subCategory: string, value: string, relatedSubs: { name: string, id: number }[] }[] = [];
 
-  specifications = [
-    { categoryId: -1, subCategory: '', value: '', relatedSubs: [] as { name: string, id: number }[] }
-  ];
   categories: { id: number; name: string }[] = [];
   subcategories: { id: number; category_id: number; name: string }[] = [];
-  // related_subs: string[] = [];
   selectedcat = '';
   isDisable = true;
 
