@@ -1,14 +1,30 @@
-<div class="grid" style="grid-template-columns: auto 1fr">
-  <app-sidebar (menu)="onMenu($event)" (submenu)="onSubMenu($event)"></app-sidebar>
-  <main>
-    <app-all-products *ngIf="selected === 'All Products'" (update)="onUpdate($event)"></app-all-products>
-    <app-add-phone *ngIf="selected === 'Add Product' && subselected === 'phone'"></app-add-phone>
-    <app-update *ngIf="selected === 'update'" [phoneId]="phoneId"></app-update>
-  </main>
-  <div class="bubble" id="color-up"></div>
-  <div class="bubble" id="color-mid"></div>
-  <div class="bubble" id="color-down"></div>
-  <div class="bubble" id="colorized-up"></div>
-  <div class="bubble" id="colorized-mid"></div>
-  <div class="bubble" id="colorized-down"></div>
+<div class="relative min-h-screen overflow-hidden">
+  <div class="grid min-h-screen" style="grid-template-columns: auto 1fr">
+    <app-sidebar
+      (menu)="onMenu($event)"
+      (submenu)="onSubMenu($event)"
+      class="self-stretch sticky top-0 z-10"
+    ></app-sidebar>
+    <main>
+      <app-all-products
+        *ngIf="selected === 'All Products'"
+        (update)="onUpdate($event)"
+      ></app-all-products>
+      <app-add-phone
+        *ngIf="selected === 'Add Product' && subselected === 'phone'"
+      ></app-add-phone>
+      <app-update
+        *ngIf="selected === 'update'"
+        [phoneId]="phoneId"
+      ></app-update>
+    </main>
+    <div class="absolute inset-0 -z-50 pointer-events-none">
+      <div class="bubble" id="color-up"></div>
+      <div class="bubble" id="color-mid"></div>
+      <div class="bubble" id="color-down"></div>
+      <div class="bubble" id="colorized-up"></div>
+      <div class="bubble" id="colorized-mid"></div>
+      <div class="bubble" id="colorized-down"></div>
+    </div>
+  </div>
 </div>
