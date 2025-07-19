@@ -79,7 +79,7 @@ export class ImagesComponent {
   }
   emitImage() {
     this.fileChosen.emit(this.mainImage);
-    console.log(this.isDisable);
+    // console.log(this.isDisable);
     if (this.mainImage) {
       this.isDisable = false;
     } else {

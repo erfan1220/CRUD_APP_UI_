@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class SpecificationsComponent {
   @Output() specsChanged = new EventEmitter<
-    { categoryId: number; subCategory: string; value: string }[]
+    { categoryId: number; subCategoryId: number; value: string }[]
   >();
   @Output() disable = new EventEmitter<boolean>();
   @Input() specifications: {
@@ -41,28 +41,24 @@ export class SpecificationsComponent {
     this.rd.subcategories().subscribe({
       next: (data) => {
         this.subcategories = data;
-        // console.log(data);
+
+        this.specifications.forEach((s) => {
+          const matchedCategory = this.categories.find(
+            (c) => c.id === s.categoryId
+          );
+          if (matchedCategory) {
+            s.category = matchedCategory.name;
+          }
+
+          const related = this.subcategories
+            .filter((sub) => sub.category_id === s.categoryId)
+            .map((sub) => ({
+              name: sub.name,
+              id: sub.id,
+            }));
+          s.relatedSubs = related;
+        });
       },
-    });
-
-    console.log('this is specs');
-    console.log(this.specifications);
-    this.specifications.forEach((s) => {
-      const matchedCategory = this.categories.find(
-        (c) => c.id === s.categoryId
-      );
-      if (matchedCategory) {
-        s.category = matchedCategory.name;
-      }
-
-      const related = this.subcategories
-        .filter((sub) => sub.category_id === s.categoryId)
-        .map((sub) => ({
-          name: sub.name,
-          id: sub.id,
-        }));
-      s.relatedSubs = related;
-      
     });
   }
 
@@ -106,10 +102,10 @@ export class SpecificationsComponent {
 
   emitMinimalData() {
     const cleaned = this.specifications
-      .filter((s) => s.categoryId !== -1 && s.subCategory && s.value)
+      .filter((s) => s.categoryId !== -1 && s.subcategoryId != -1 && s.value)
       .map((s) => ({
         categoryId: s.categoryId,
-        subCategory: s.subCategory,
+        subCategoryId: s.subcategoryId,
         value: s.value,
       }));
     if (cleaned.length >= 2) {

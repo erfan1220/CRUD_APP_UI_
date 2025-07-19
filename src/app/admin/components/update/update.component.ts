@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { ImagesComponent } from '../phone/images/images.component';
 import { LoadingSvgComponent } from '../loading-svg/loading-svg.component';
 import { SpecificationsComponent } from '../phone/specifications/specifications.component';
+import { AdvanceInfoComponent } from "../phone/advance-info/advance-info.component";
 
 @Component({
   selector: 'app-update',
@@ -18,7 +19,8 @@ import { SpecificationsComponent } from '../phone/specifications/specifications.
     ImagesComponent,
     LoadingSvgComponent,
     SpecificationsComponent,
-  ],
+    AdvanceInfoComponent
+],
   templateUrl: './update.component.html',
   styleUrl: './update.component.css',
 })
@@ -27,7 +29,6 @@ export class UpdateComponent {
 
   fullData: { [key: string]: any } = {};
   field: { label: string; value: string | number }[] = [];
-  // specs: { category: string, subcategory: string, value: string }[] = [];
   exp: { label: string; value: string; rows: number; cols: number }[] = [];
   changeImage: boolean = false;
   detail: Product | undefined;
@@ -77,7 +78,7 @@ export class UpdateComponent {
   }
 
   receiveSpecs(
-    specs: { categoryId: number; subCategory: string; value: string }[]
+    specs: { categoryId: number; subCategoryId: number; value: string }[]
   ) {
     this.fullData['specification'] = specs;
     console.log(this.fullData);
@@ -93,11 +94,9 @@ export class UpdateComponent {
     for (const key in this.fullData) {
       const value = this.fullData[key];
       if (key === 'specification') {
-        console.log(typeof value);
       }
 
       if (value instanceof File) {
-        console.log('true');
         formData.append(key, value);
       } else if (typeof value === 'object') {
         formData.append(key, JSON.stringify(value));
@@ -105,6 +104,12 @@ export class UpdateComponent {
         formData.append(key, value.toString());
       }
     }
+    console.log(formData);
+
+    // this.ps.updateProduct(formData).subscribe({
+    //   next: () => {},
+    //   error: () => {},
+    // });
   }
 
   closeModal() {
@@ -119,6 +124,7 @@ export class UpdateComponent {
       },
     });
   }
+
   onclick(id: number) {
     this.loading = true;
     this.sellerId = id;
@@ -131,7 +137,7 @@ export class UpdateComponent {
       next: (data) => {
         this.productDetails = data;
         this.detail = this.productDetails[0];
-        console.log(this.detail);
+        // console.log(this.detail);
 
         if (this.detail?.specifications?.length) {
           this.detail.specifications.forEach((i) => {

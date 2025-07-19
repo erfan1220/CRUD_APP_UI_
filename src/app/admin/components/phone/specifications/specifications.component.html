@@ -19,7 +19,7 @@
       [(ngModel)]="spec.subcategoryId"
       class="bg-gray-100 rounded-lg py-1.5 px-2 border border-solid border-gray-300 outline-none text-center w-[15rem]"
     >
-      <option value="">Select subcategory</option>
+      <option value="-1">Select subcategory</option>
       <option *ngFor="let sub of spec.relatedSubs" [value]="sub.id">
         {{ sub.name }}
       </option>

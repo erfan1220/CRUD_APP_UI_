@@ -62,10 +62,10 @@ export class Verify2Component {
               
               this.router.navigate(['../']);
             }
-            console.log(res);
+            console.error(res);
           },
           error: (err) => {
-            console.log(err);
+            console.error(err);
           },
         });
     }

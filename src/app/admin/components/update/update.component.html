@@ -31,7 +31,10 @@
     (ngSubmit)="onSubmit()"
     class="p-5 flex justify-center items-center flex-col border-2 border-solid border-blue-600 rounded-lg w-fit h-fit gap-2"
   >
-    <div class="flex justify-between gap-10">
+    <div
+      class="flex justify-center gap-10"
+      [ngClass]="{ 'flex-col': changeImage || !detail?.image_url}"
+    >
       <div
         *ngIf="detail?.image_url && !changeImage; else noImage"
         class="relative"
@@ -69,8 +72,9 @@
     </div>
 
     <div class="flex gap-3 flex-col items-center">
-      <div class="felx flex-col" *ngFor="let item of exp">
-        <label [for]="item.label" class="flex flex-col">
+      <div class="felx flex-col">
+        <!-- *ngFor="let item of exp" -->
+        <!-- <label [for]="item.label" class="flex flex-col">
           {{ item.label }}
         </label>
         <textarea
@@ -81,7 +85,10 @@
           [rows]="item.rows"
           [cols]="item.cols"
           class="bg-gray-200 border border-solid border-gray-200 rounded-lg p-2 outline-none resize-none focus:border-none focus:bg-white focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)]"
-        ></textarea>
+        ></textarea> -->
+        <app-advance-info
+          (formComplete)="receivePartA($event)"
+        ></app-advance-info>
       </div>
       <div
         class="max-h-[15rem] overflow-y-scroll w-full rounded-lg border border-solid border-gray-400"

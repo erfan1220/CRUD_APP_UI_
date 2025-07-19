@@ -23,14 +23,13 @@ import { ProductsService } from '../../../shared/services/products.service';
     AdvanceInfoComponent,
     ImagesComponent,
     SpecificationsComponent,
-    MatIcon
+    MatIcon,
   ],
   templateUrl: './add-phone.component.html',
   styleUrl: './add-phone.component.css',
 })
 export class AddPhoneComponent {
   @Input() isDisable: boolean = true;
-
 
   fullData: { [key: string]: any } = {};
   step: number = 0;
@@ -42,34 +41,35 @@ export class AddPhoneComponent {
     name: [''],
   });
 
-
   receivePartA(data: { [key: string]: string }) {
     Object.assign(this.fullData, data);
     console.log(this.fullData);
   }
 
-  receiveSpecs(specs: { categoryId: number; subCategory: string; value: string }[]) {
+  receiveSpecs(
+    specs: { categoryId: number; subCategoryId: number; value: string }[]
+  ) {
     this.fullData['specification'] = specs;
     console.log(this.fullData);
   }
 
   reciveMainImage(file: File | null) {
     // const file:File | null= event.target.file
-    console.log(file);
-    this.fullData['mainImage'] = file
+    // console.log(file);
+    this.fullData['mainImage'] = file;
     console.log(this.fullData);
   }
 
   onFromComplete(data: any) {
     console.log(data);
-    this.isDisable = data
+    this.isDisable = data;
   }
 
   onclick() {
     if (this.step === 3) {
       this.submitData();
     } else {
-      this.isDisable = true
+      this.isDisable = true;
       this.step += 1;
     }
   }
@@ -78,12 +78,12 @@ export class AddPhoneComponent {
     const formData = new FormData();
     for (const key in this.fullData) {
       const value = this.fullData[key];
-      if (key === "specification") {
-        console.log(typeof (value));
+      if (key === 'specification') {
+        console.log(typeof value);
       }
 
       if (value instanceof File) {
-        console.log("true");
+        console.log('true');
         formData.append(key, value);
       } else if (typeof value === 'object') {
         formData.append(key, JSON.stringify(value));
@@ -93,16 +93,16 @@ export class AddPhoneComponent {
     }
     this.ps.addProduct(formData).subscribe({
       next: () => {
-        console.log("add successfully");
+        console.log('add successfully');
         window.location.reload();
-      }, error: (err) => {
-        console.error(err)
-      }
-    }
-    )
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 
   backward() {
-    this.step === 0 ? window.location.reload() : this.step -= 1
+    this.step === 0 ? window.location.reload() : (this.step -= 1);
   }
 }
