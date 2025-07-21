@@ -33,7 +33,7 @@
   >
     <div
       class="flex justify-center gap-10"
-      [ngClass]="{ 'flex-col': changeImage || !detail?.image_url}"
+      [ngClass]="{ 'flex-col': changeImage || !detail?.image_url }"
     >
       <div
         *ngIf="detail?.image_url && !changeImage; else noImage"
@@ -72,9 +72,8 @@
     </div>
 
     <div class="flex gap-3 flex-col items-center">
-      <div class="felx flex-col">
-        <!-- *ngFor="let item of exp" -->
-        <!-- <label [for]="item.label" class="flex flex-col">
+      <div class="felx flex-col" *ngFor="let item of exp">
+        <label [for]="item.label" class="flex flex-col">
           {{ item.label }}
         </label>
         <textarea
@@ -84,19 +83,14 @@
           [name]="item.label"
           [rows]="item.rows"
           [cols]="item.cols"
+          [name]="item.label"
           class="bg-gray-200 border border-solid border-gray-200 rounded-lg p-2 outline-none resize-none focus:border-none focus:bg-white focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)]"
-        ></textarea> -->
-        <app-advance-info
-          (formComplete)="receivePartA($event)"
-        ></app-advance-info>
+        ></textarea>
       </div>
       <div
         class="max-h-[15rem] overflow-y-scroll w-full rounded-lg border border-solid border-gray-400"
       >
-        <app-specifications
-          [specifications]="specs"
-          (specsChanged)="receiveSpecs($event)"
-        ></app-specifications>
+        <app-specifications [specifications]="specs"></app-specifications>
       </div>
     </div>
     <button

@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { ImagesComponent } from '../phone/images/images.component';
 import { LoadingSvgComponent } from '../loading-svg/loading-svg.component';
 import { SpecificationsComponent } from '../phone/specifications/specifications.component';
-import { AdvanceInfoComponent } from "../phone/advance-info/advance-info.component";
 
 @Component({
   selector: 'app-update',
@@ -19,17 +18,16 @@ import { AdvanceInfoComponent } from "../phone/advance-info/advance-info.compone
     ImagesComponent,
     LoadingSvgComponent,
     SpecificationsComponent,
-    AdvanceInfoComponent
-],
+  ],
   templateUrl: './update.component.html',
   styleUrl: './update.component.css',
 })
 export class UpdateComponent {
   @Input() phoneId: number | undefined;
 
-  fullData: { [key: string]: any } = {};
-  field: { label: string; value: string | number }[] = [];
-  exp: { label: string; value: string; rows: number; cols: number }[] = [];
+  originalField: { label: string; value: string | number }[] = [];
+  originalExp: { label: string; value: string; rows: number; cols: number }[] =
+    [];
   changeImage: boolean = false;
   detail: Product | undefined;
   loading: boolean = false;
@@ -40,6 +38,7 @@ export class UpdateComponent {
   sellers: { seller_id: number; name: string }[] = [];
   productDetails: Product[] = [];
   image_src: string = '';
+  selectedImageFile: File | null = null;
   specs: {
     category: string;
     categoryId: number;
@@ -68,48 +67,59 @@ export class UpdateComponent {
       value: 'Write your expert review here...',
     },
   ];
+  field: { label: string; value: string | number }[] = [];
+  exp: { label: string; value: string; rows: number; cols: number }[] = [];
+  originalSpecs: typeof this.specs = [];
 
   private rd: ReferenceDataService = inject(ReferenceDataService);
   private ps: ProductsService = inject(ProductsService);
 
-  receivePartA(data: { [key: string]: string }) {
-    Object.assign(this.fullData, data);
-    console.log(this.fullData);
-  }
-
-  receiveSpecs(
-    specs: { categoryId: number; subCategoryId: number; value: string }[]
-  ) {
-    this.fullData['specification'] = specs;
-    console.log(this.fullData);
-  }
-
   reciveMainImage(file: File | null) {
-    this.fullData['mainImage'] = file;
-    console.log(this.fullData);
+    this.selectedImageFile = file;
   }
 
   onSubmit() {
     const formData = new FormData();
-    for (const key in this.fullData) {
-      const value = this.fullData[key];
-      if (key === 'specification') {
-      }
 
-      if (value instanceof File) {
-        formData.append(key, value);
-      } else if (typeof value === 'object') {
-        formData.append(key, JSON.stringify(value));
-      } else if (value !== null && value !== undefined) {
-        formData.append(key, value.toString());
-      }
+    formData.append('product_id', String(this.phoneId));
+    formData.append('seller_id', String(this.sellerId));
+
+    if (this.changeImage && this.selectedImageFile) {
+      formData.append('image', this.selectedImageFile);
     }
-    console.log(formData);
 
-    // this.ps.updateProduct(formData).subscribe({
-    //   next: () => {},
-    //   error: () => {},
-    // });
+    this.originalField.forEach((item) => {
+      const current = this.field.find((f) => f.label === item.label);
+      if (current && current.value !== item.value) {
+        formData.append(item.label.toLowerCase(), current.value.toString());
+      }
+    });
+
+    this.originalExp.forEach((item) => {
+      const current = this.exp.find((e) => e.label === item.label);
+      if (current && current.value !== item.value) {
+        formData.append(item.label, current.value);
+      }
+    });
+
+    if (JSON.stringify(this.specs) !== JSON.stringify(this.originalSpecs)) {
+      formData.append('specifications', JSON.stringify(this.specs));
+    }
+
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0], pair[1]);
+    // }
+
+    this.ps.updateProduct(formData).subscribe({
+      next: () => {
+        alert('Update successful!');
+        window.location.reload();
+      },
+      error: (err) => {
+        console.error('Update failed:', err);
+        alert('Update failed!');
+      },
+    });
   }
 
   closeModal() {
@@ -129,35 +139,45 @@ export class UpdateComponent {
     this.loading = true;
     this.sellerId = id;
     this.modalOpen = false;
+
     const model = {
       phoneId: this.phoneId,
       sellerId: this.sellerId,
     };
+
     this.ps.getDetails(model).subscribe({
       next: (data) => {
         this.productDetails = data;
         this.detail = this.productDetails[0];
-        // console.log(this.detail);
+
+        this.originalField = [];
+        this.field = [];
+        this.originalExp = [];
+        this.exp = [];
+        this.specs = [];
+        this.originalSpecs = [];
 
         if (this.detail?.specifications?.length) {
-          this.detail.specifications.forEach((i) => {
-            this.specs.push({
-              category: i.category_name,
-              categoryId: i.category_id,
-              subCategory: i.subcategory_name,
-              subcategoryId: i.subcategory_id,
-              value: i.value,
-              relatedSubs: [],
-            });
-          });
+          this.specs = this.detail.specifications.map((i) => ({
+            category: i.category_name,
+            categoryId: i.category_id,
+            subCategory: i.subcategory_name,
+            subcategoryId: i.subcategory_id,
+            value: i.value,
+            relatedSubs: [],
+          }));
+          this.originalSpecs = structuredClone(this.specs);
         }
 
         if (this.detail?.price) {
+          this.originalField.push({ label: 'Price', value: this.detail.price });
           this.field.push({ label: 'Price', value: this.detail.price });
         }
         if (this.detail?.stock !== undefined) {
+          this.originalField.push({ label: 'Stock', value: this.detail.stock });
           this.field.push({ label: 'Stock', value: this.detail.stock });
         }
+
         if (this.detail.image_url) {
           this.image_src = `http://localhost:5000/uploads/${this.detail.image_url}`;
         }
@@ -166,30 +186,30 @@ export class UpdateComponent {
           this.detail.explanation
             .filter((e) => e?.partname && e?.value)
             .forEach((e) => {
-              if (e.partname === 'shortDescription') {
-                this.rows = 1;
-                this.cols = 50;
-              } else {
-                this.rows = 10;
-                this.cols = 50;
-              }
-              this.exp.push({
+              const rows = e.partname === 'shortDescription' ? 1 : 10;
+              const cols = 50;
+              const item = {
                 label: e.partname,
                 value: e.value,
-                rows: this.rows,
-                cols: this.cols,
-              });
+                rows,
+                cols,
+              };
+              this.originalExp.push(structuredClone(item));
+              this.exp.push(structuredClone(item));
             });
         } else {
           this.labels.forEach((m) => {
-            this.exp.push({
+            const item = {
               label: m.name,
               value: m.value,
-              rows: this.rows,
-              cols: this.cols,
-            });
+              rows: m.rows,
+              cols: m.cols,
+            };
+            this.originalExp.push(structuredClone(item));
+            this.exp.push(structuredClone(item));
           });
         }
+
         this.loading = false;
       },
     });
