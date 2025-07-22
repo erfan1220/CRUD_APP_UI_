@@ -78,9 +78,6 @@ export class AddPhoneComponent {
     const formData = new FormData();
     for (const key in this.fullData) {
       const value = this.fullData[key];
-      if (key === 'specification') {
-        console.log(typeof value);
-      }
 
       if (value instanceof File) {
         console.log('true');

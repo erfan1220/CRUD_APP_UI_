@@ -1,63 +1,34 @@
 <div class="bg-grey-300 p-3 flex flex-col gap-4 items-center justify-center">
-  <div
-    class="flex gap-3 items-center w-full justify-end"
-    *ngFor="let spec of specifications; let i = index"
-  >
-    <select
-      (change)="onChange(i, $event)"
-      [(ngModel)]="spec.categoryId"
-      class="bg-gray-100 rounded-lg py-1.5 px-2 border border-solid border-gray-300 outline-none text-center w-[10rem]"
-    >
+  <div class="flex gap-3 items-center w-full justify-end" *ngFor="let spec of specifications; let i = index">
+    <select (change)="onChange(i, $event)" [(ngModel)]="spec.categoryId"
+      class="bg-gray-100 rounded-lg py-1.5 px-2 border border-solid border-gray-300 outline-none text-center w-[10rem]">
       <option value="-1">Select category</option>
       <option *ngFor="let cat of categories" [value]="cat.id">
         {{ cat.name }}
       </option>
     </select>
 
-    <select
-      (change)="onSubChange(i, $event)"
-      [(ngModel)]="spec.subcategoryId"
-      class="bg-gray-100 rounded-lg py-1.5 px-2 border border-solid border-gray-300 outline-none text-center w-[15rem]"
-    >
+    <select (change)="onSubChange(i, $event)" [(ngModel)]="spec.subcategoryId"
+      class="bg-gray-100 rounded-lg py-1.5 px-2 border border-solid border-gray-300 outline-none text-center w-[15rem]">
       <option value="-1">Select subcategory</option>
       <option *ngFor="let sub of spec.relatedSubs" [value]="sub.id">
         {{ sub.name }}
       </option>
     </select>
 
-    <input
-      [value]="spec.value"
-      (input)="onValueChange(i, $event)"
-      placeholder="Value"
-      class="bg-gray-100 outline-none px-2 p-1 focus:bg-white focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg border border-solid border-gray-300 placeholder:text-gray-400"
-    />
+    <input [value]="spec.value" (input)="onValueChange(i, $event)" placeholder="Value"
+      class="bg-gray-100 outline-none px-2 p-1 focus:bg-white focus:shadow-[0_0_8px_2px_rgba(0,0,0,0.15)] rounded-lg border border-solid border-gray-300 placeholder:text-gray-400" />
 
-    <button
-      class="bg-black cursor-pointer text-white w-4 h-4 text-center"
-      aria-label="Remove"
-      (click)="removeItem(i)"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class=""
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"
-        />
+    <button type="button" class="bg-black cursor-pointer text-white w-4 h-4 text-center" aria-label="Remove"
+      (click)="removeItem(i)">
+      <svg xmlns="http://www.w3.org/2000/svg" class="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
   </div>
 
-  <button
-    (click)="addSpecification()"
-    class="bg-primary cursor-pointer outline-none rounded-xl mt-4 text-text-primary w-1/4 p-2 hover:bg-primary-dark"
-  >
+  <button type="button" (click)="addSpecification()"
+    class="bg-primary cursor-pointer outline-none rounded-xl mt-4 text-text-primary w-1/4 p-2 hover:bg-primary-dark">
     Add
   </button>
 </div>

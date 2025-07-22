@@ -69,7 +69,7 @@ export class UpdateComponent {
   ];
   field: { label: string; value: string | number }[] = [];
   exp: { label: string; value: string; rows: number; cols: number }[] = [];
-  originalSpecs: typeof this.specs = [];
+  specifications: { [key: string]: any } = {};
 
   private rd: ReferenceDataService = inject(ReferenceDataService);
   private ps: ProductsService = inject(ProductsService);
@@ -78,11 +78,24 @@ export class UpdateComponent {
     this.selectedImageFile = file;
   }
 
+  receiveSpecs(
+    specs: { categoryId: number; subCategoryId: number; value: string }[]
+  ) {
+    this.specifications['specification'] = specs;
+  }
+
   onSubmit() {
     const formData = new FormData();
 
     formData.append('product_id', String(this.phoneId));
     formData.append('seller_id', String(this.sellerId));
+    for (const key in this.specifications) {
+      const value = this.specifications[key];
+      console.log(typeof value);
+      if (typeof value === 'object') {
+        formData.append(key, JSON.stringify(value));
+      }
+    }
 
     if (this.changeImage && this.selectedImageFile) {
       formData.append('image', this.selectedImageFile);
@@ -102,13 +115,9 @@ export class UpdateComponent {
       }
     });
 
-    if (JSON.stringify(this.specs) !== JSON.stringify(this.originalSpecs)) {
-      formData.append('specifications', JSON.stringify(this.specs));
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
     }
-
-    // for (let pair of formData.entries()) {
-    //   console.log(pair[0], pair[1]);
-    // }
 
     this.ps.updateProduct(formData).subscribe({
       next: () => {
@@ -155,7 +164,6 @@ export class UpdateComponent {
         this.originalExp = [];
         this.exp = [];
         this.specs = [];
-        this.originalSpecs = [];
 
         if (this.detail?.specifications?.length) {
           this.specs = this.detail.specifications.map((i) => ({
@@ -166,7 +174,6 @@ export class UpdateComponent {
             value: i.value,
             relatedSubs: [],
           }));
-          this.originalSpecs = structuredClone(this.specs);
         }
 
         if (this.detail?.price) {

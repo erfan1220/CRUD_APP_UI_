@@ -51,7 +51,7 @@ export class ProductsService {
   }
 
   updateProduct(body: any): Observable<any> {
-    const url = '';
+    const url = 'http://localhost:5000/admin/products';
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.token}`
